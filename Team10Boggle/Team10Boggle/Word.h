@@ -10,6 +10,7 @@ namespace model{
 	public:
 		Word(String^ value);
 		Word(void);
+
 		//bool existsInDictionary(List<String^>^ dictionary);
 		property String^ value{
 			String^ get(){ return this->contents; }
