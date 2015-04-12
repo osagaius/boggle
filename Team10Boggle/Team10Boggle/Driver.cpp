@@ -1,7 +1,7 @@
 #include <tchar.h>
 #include "BoggleForm.h"
 
-using namespace view;
+
 
 [STAThreadAttribute]
 int main(array<System::String ^> ^args)

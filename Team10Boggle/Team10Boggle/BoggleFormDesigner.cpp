@@ -1,5 +1,5 @@
 #include "BoggleForm.h"
-namespace view {
+using namespace System::Resources;
 	/// <summary>
 	/// Required method for Designer support - do not modify
 	/// the contents of this method with the code editor.
@@ -39,6 +39,7 @@ namespace view {
 		// checkBoxContainer
 		// 
 		this->checkBoxContainer->AutoSize = true;
+		this->checkBoxContainer->BackColor = System::Drawing::Color::Silver;
 		this->checkBoxContainer->ColumnCount = 4;
 		this->checkBoxContainer->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Percent,
 			25)));
@@ -81,6 +82,8 @@ namespace view {
 		this->checkBox17->AllowDrop = true;
 		this->checkBox17->Appearance = System::Windows::Forms::Appearance::Button;
 		this->checkBox17->BackColor = System::Drawing::Color::LightGray;
+		this->checkBox17->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
+		this->checkBox17->CausesValidation = false;
 		this->checkBox17->Cursor = System::Windows::Forms::Cursors::Hand;
 		this->checkBox17->Dock = System::Windows::Forms::DockStyle::Fill;
 		this->checkBox17->FlatAppearance->BorderSize = 0;
@@ -108,6 +111,8 @@ namespace view {
 		this->checkBox16->AllowDrop = true;
 		this->checkBox16->Appearance = System::Windows::Forms::Appearance::Button;
 		this->checkBox16->BackColor = System::Drawing::Color::LightGray;
+		this->checkBox16->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
+		this->checkBox16->CausesValidation = false;
 		this->checkBox16->Cursor = System::Windows::Forms::Cursors::Hand;
 		this->checkBox16->Dock = System::Windows::Forms::DockStyle::Fill;
 		this->checkBox16->FlatAppearance->BorderSize = 0;
@@ -135,6 +140,8 @@ namespace view {
 		this->checkBox15->AllowDrop = true;
 		this->checkBox15->Appearance = System::Windows::Forms::Appearance::Button;
 		this->checkBox15->BackColor = System::Drawing::Color::LightGray;
+		this->checkBox15->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
+		this->checkBox15->CausesValidation = false;
 		this->checkBox15->Cursor = System::Windows::Forms::Cursors::Hand;
 		this->checkBox15->Dock = System::Windows::Forms::DockStyle::Fill;
 		this->checkBox15->FlatAppearance->BorderSize = 0;
@@ -162,6 +169,8 @@ namespace view {
 		this->checkBox14->AllowDrop = true;
 		this->checkBox14->Appearance = System::Windows::Forms::Appearance::Button;
 		this->checkBox14->BackColor = System::Drawing::Color::LightGray;
+		this->checkBox14->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
+		this->checkBox14->CausesValidation = false;
 		this->checkBox14->Cursor = System::Windows::Forms::Cursors::Hand;
 		this->checkBox14->Dock = System::Windows::Forms::DockStyle::Fill;
 		this->checkBox14->FlatAppearance->BorderSize = 0;
@@ -189,6 +198,8 @@ namespace view {
 		this->checkBox13->AllowDrop = true;
 		this->checkBox13->Appearance = System::Windows::Forms::Appearance::Button;
 		this->checkBox13->BackColor = System::Drawing::Color::LightGray;
+		this->checkBox13->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
+		this->checkBox13->CausesValidation = false;
 		this->checkBox13->Cursor = System::Windows::Forms::Cursors::Hand;
 		this->checkBox13->Dock = System::Windows::Forms::DockStyle::Fill;
 		this->checkBox13->FlatAppearance->BorderSize = 0;
@@ -216,6 +227,8 @@ namespace view {
 		this->checkBox12->AllowDrop = true;
 		this->checkBox12->Appearance = System::Windows::Forms::Appearance::Button;
 		this->checkBox12->BackColor = System::Drawing::Color::LightGray;
+		this->checkBox12->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
+		this->checkBox12->CausesValidation = false;
 		this->checkBox12->Cursor = System::Windows::Forms::Cursors::Hand;
 		this->checkBox12->Dock = System::Windows::Forms::DockStyle::Fill;
 		this->checkBox12->FlatAppearance->BorderSize = 0;
@@ -243,6 +256,8 @@ namespace view {
 		this->checkBox11->AllowDrop = true;
 		this->checkBox11->Appearance = System::Windows::Forms::Appearance::Button;
 		this->checkBox11->BackColor = System::Drawing::Color::LightGray;
+		this->checkBox11->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
+		this->checkBox11->CausesValidation = false;
 		this->checkBox11->Cursor = System::Windows::Forms::Cursors::Hand;
 		this->checkBox11->Dock = System::Windows::Forms::DockStyle::Fill;
 		this->checkBox11->FlatAppearance->BorderSize = 0;
@@ -270,6 +285,8 @@ namespace view {
 		this->checkBox10->AllowDrop = true;
 		this->checkBox10->Appearance = System::Windows::Forms::Appearance::Button;
 		this->checkBox10->BackColor = System::Drawing::Color::LightGray;
+		this->checkBox10->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
+		this->checkBox10->CausesValidation = false;
 		this->checkBox10->Cursor = System::Windows::Forms::Cursors::Hand;
 		this->checkBox10->Dock = System::Windows::Forms::DockStyle::Fill;
 		this->checkBox10->FlatAppearance->BorderSize = 0;
@@ -297,6 +314,8 @@ namespace view {
 		this->checkBox9->AllowDrop = true;
 		this->checkBox9->Appearance = System::Windows::Forms::Appearance::Button;
 		this->checkBox9->BackColor = System::Drawing::Color::LightGray;
+		this->checkBox9->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
+		this->checkBox9->CausesValidation = false;
 		this->checkBox9->Cursor = System::Windows::Forms::Cursors::Hand;
 		this->checkBox9->Dock = System::Windows::Forms::DockStyle::Fill;
 		this->checkBox9->FlatAppearance->BorderSize = 0;
@@ -324,6 +343,8 @@ namespace view {
 		this->checkBox8->AllowDrop = true;
 		this->checkBox8->Appearance = System::Windows::Forms::Appearance::Button;
 		this->checkBox8->BackColor = System::Drawing::Color::LightGray;
+		this->checkBox8->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
+		this->checkBox8->CausesValidation = false;
 		this->checkBox8->Cursor = System::Windows::Forms::Cursors::Hand;
 		this->checkBox8->Dock = System::Windows::Forms::DockStyle::Fill;
 		this->checkBox8->FlatAppearance->BorderSize = 0;
@@ -351,6 +372,8 @@ namespace view {
 		this->checkBox7->AllowDrop = true;
 		this->checkBox7->Appearance = System::Windows::Forms::Appearance::Button;
 		this->checkBox7->BackColor = System::Drawing::Color::LightGray;
+		this->checkBox7->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
+		this->checkBox7->CausesValidation = false;
 		this->checkBox7->Cursor = System::Windows::Forms::Cursors::Hand;
 		this->checkBox7->Dock = System::Windows::Forms::DockStyle::Fill;
 		this->checkBox7->FlatAppearance->BorderSize = 0;
@@ -378,6 +401,8 @@ namespace view {
 		this->checkBox6->AllowDrop = true;
 		this->checkBox6->Appearance = System::Windows::Forms::Appearance::Button;
 		this->checkBox6->BackColor = System::Drawing::Color::LightGray;
+		this->checkBox6->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
+		this->checkBox6->CausesValidation = false;
 		this->checkBox6->Cursor = System::Windows::Forms::Cursors::Hand;
 		this->checkBox6->Dock = System::Windows::Forms::DockStyle::Fill;
 		this->checkBox6->FlatAppearance->BorderSize = 0;
@@ -405,6 +430,8 @@ namespace view {
 		this->checkBox5->AllowDrop = true;
 		this->checkBox5->Appearance = System::Windows::Forms::Appearance::Button;
 		this->checkBox5->BackColor = System::Drawing::Color::LightGray;
+		this->checkBox5->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
+		this->checkBox5->CausesValidation = false;
 		this->checkBox5->Cursor = System::Windows::Forms::Cursors::Hand;
 		this->checkBox5->Dock = System::Windows::Forms::DockStyle::Fill;
 		this->checkBox5->FlatAppearance->BorderSize = 0;
@@ -432,6 +459,8 @@ namespace view {
 		this->checkBox4->AllowDrop = true;
 		this->checkBox4->Appearance = System::Windows::Forms::Appearance::Button;
 		this->checkBox4->BackColor = System::Drawing::Color::LightGray;
+		this->checkBox4->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
+		this->checkBox4->CausesValidation = false;
 		this->checkBox4->Cursor = System::Windows::Forms::Cursors::Hand;
 		this->checkBox4->Dock = System::Windows::Forms::DockStyle::Fill;
 		this->checkBox4->FlatAppearance->BorderSize = 0;
@@ -459,6 +488,8 @@ namespace view {
 		this->checkBox3->AllowDrop = true;
 		this->checkBox3->Appearance = System::Windows::Forms::Appearance::Button;
 		this->checkBox3->BackColor = System::Drawing::Color::LightGray;
+		this->checkBox3->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
+		this->checkBox3->CausesValidation = false;
 		this->checkBox3->Cursor = System::Windows::Forms::Cursors::Hand;
 		this->checkBox3->Dock = System::Windows::Forms::DockStyle::Fill;
 		this->checkBox3->FlatAppearance->BorderSize = 0;
@@ -486,8 +517,9 @@ namespace view {
 		this->checkBox2->AllowDrop = true;
 		this->checkBox2->Appearance = System::Windows::Forms::Appearance::Button;
 		this->checkBox2->BackColor = System::Drawing::Color::LightGray;
-		this->checkBox2->Cursor = System::Windows::Forms::Cursors::Hand;
 		this->checkBox2->Dock = System::Windows::Forms::DockStyle::Fill;
+		this->checkBox2->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
+		this->checkBox2->Cursor = System::Windows::Forms::Cursors::Hand;
 		this->checkBox2->FlatAppearance->BorderSize = 0;
 		this->checkBox2->FlatAppearance->CheckedBackColor = System::Drawing::Color::RoyalBlue;
 		this->checkBox2->FlatAppearance->MouseOverBackColor = System::Drawing::Color::RoyalBlue;
@@ -518,6 +550,7 @@ namespace view {
 		this->listBox1->SelectionMode = System::Windows::Forms::SelectionMode::None;
 		this->listBox1->Size = System::Drawing::Size(91, 214);
 		this->listBox1->TabIndex = 3;
+		this->listBox1->MouseUp += gcnew System::Windows::Forms::MouseEventHandler(this, &BoggleForm::checkBox_MouseUp);
 		// 
 		// button1
 		// 
@@ -537,6 +570,7 @@ namespace view {
 		this->textBox1->Name = L"textBox1";
 		this->textBox1->Size = System::Drawing::Size(248, 20);
 		this->textBox1->TabIndex = 5;
+		this->textBox1->MouseUp += gcnew System::Windows::Forms::MouseEventHandler(this, &BoggleForm::checkBox_MouseUp);
 		// 
 		// label1
 		// 
@@ -595,4 +629,4 @@ namespace view {
 		this->PerformLayout();
 
 	}
-}
+
