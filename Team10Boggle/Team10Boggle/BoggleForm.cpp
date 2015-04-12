@@ -28,6 +28,7 @@ using namespace System::Resources;
 		this->lastBoxChecked = gcnew CheckBox();
 		this->allUnchecked = true;
 		this->mouseDown = false;
+
 		this->draggedOverBoxCount = 0;
 		//this->checkBox2->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resourceManager->GetObject(L"buttonbackground")));
 
