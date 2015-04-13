@@ -2,8 +2,8 @@
 #include "Boggle.h"
 #include "Die.h"
 #include "DieCollection.h"
+
 using namespace model;
-namespace view {
 
 	using namespace System;
 	using namespace System::ComponentModel;
@@ -11,6 +11,7 @@ namespace view {
 	using namespace System::Windows::Forms;
 	using namespace System::Data;
 	using namespace System::Drawing;
+	using namespace System::Resources;
 
 	/// <summary>
 	/// Summary for BoggleForm
@@ -36,7 +37,7 @@ namespace view {
 		}
 
 	private:
-
+		ResourceManager^ resourceManager;
 		int draggedOverBoxCount;
 		CheckBox^ getCheckBox(int column, int row);
 		bool clickedValidCheckedBox(CheckBox^ checkBox);
@@ -104,6 +105,6 @@ namespace view {
 			 System::Void checkBox_MouseDown(System::Object^  sender, System::Windows::Forms::MouseEventArgs^  e);
 			 System::Void checkBox_MouseUp(System::Object^  sender, System::Windows::Forms::MouseEventArgs^  e);
 			 System::Void checkBox_MouseHover(System::Object^  sender, System::EventArgs^  e);
-	
+
 	};
-}
+

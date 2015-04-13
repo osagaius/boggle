@@ -10,9 +10,12 @@ using namespace System::Windows::Input;
 using namespace std;
 using namespace model;
 using namespace System::Threading;
-namespace view{
+using namespace System::Resources;
+
 
 	BoggleForm::BoggleForm(){
+		this->resourceManager = gcnew
+			Resources::ResourceManager(L"Team10Boggle.Resource", this->GetType()->Assembly);
 		this->InitializeComponent();
 		this->boggle = gcnew Boggle();
 		this->listBox1->DataSource = this->boggle->playersWords;
@@ -25,8 +28,10 @@ namespace view{
 		this->lastBoxChecked = gcnew CheckBox();
 		this->allUnchecked = true;
 		this->mouseDown = false;
+
 		this->draggedOverBoxCount = 0;
-		
+		//this->checkBox2->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resourceManager->GetObject(L"buttonbackground")));
+
 	}
 
 	System::Void BoggleForm::BoggleForm_Load(System::Object^  sender, System::EventArgs^  e) {
@@ -260,5 +265,5 @@ namespace view{
 			checkBox->AutoCheck = false;
 		}
 	}
-}
+
 
