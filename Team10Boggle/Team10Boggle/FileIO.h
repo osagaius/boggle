@@ -15,5 +15,8 @@ namespace fileio{
 	public:
 		FileIO();
 		Trie^ loadDictionary();
+		PlayerManager^ loadPlayers();
+	private:
+		List<String^>^ splitString(String^ text);
 	};
 }

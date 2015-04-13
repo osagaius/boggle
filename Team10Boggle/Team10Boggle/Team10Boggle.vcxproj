@@ -87,6 +87,8 @@
     <ClCompile Include="Driver.cpp" />
     <ClCompile Include="FileIO.cpp" />
     <ClCompile Include="Node.cpp" />
+    <ClCompile Include="Player.cpp" />
+    <ClCompile Include="PlayerManager.cpp" />
     <ClCompile Include="Trie.cpp" />
     <ClCompile Include="Word.cpp" />
   </ItemGroup>
@@ -99,6 +101,8 @@
     <ClInclude Include="DieCollection.h" />
     <ClInclude Include="FileIO.h" />
     <ClInclude Include="Node.h" />
+    <ClInclude Include="Player.h" />
+    <ClInclude Include="PlayerManager.h" />
     <ClInclude Include="Trie.h" />
     <ClInclude Include="Word.h" />
   </ItemGroup>
