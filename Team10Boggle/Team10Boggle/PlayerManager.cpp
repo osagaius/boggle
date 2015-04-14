@@ -16,8 +16,6 @@ namespace model
 		this->players = gcnew List<Player^>();
 	}
 
-	property
-
 	/// <summary>
 	/// Finalizes an instance of the <see cref="PlayerManager"/> class.
 	/// </summary>

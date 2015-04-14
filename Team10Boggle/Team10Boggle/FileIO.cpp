@@ -1,6 +1,5 @@
 #include "FileIO.h"
 #include "PlayerManager.h"
-#include <sstream>
 
 using namespace System;
 using namespace System::Collections::Generic;
@@ -34,8 +33,8 @@ namespace fileio{
 		return trie;
 	}
 
-	PlayerManager^ FileIO::loadPlayers(){
-		PlayerManager^ players = gcnew PlayerManager();
+	List<Player^>^ FileIO::loadPlayers(){
+		List<Player^>^ players = gcnew List<Player^>();
 
 		String^ fileName = L"players.txt";
 
@@ -45,7 +44,8 @@ namespace fileio{
 			String^ line;
 			while ((line = input->ReadLine()) != nullptr) {
 				array<String^>^ playerInfo = splitString(line);
-				players->addPlayer(playerInfo[0], Convert::ToInt32(playerInfo[1]));
+				Player^ newPlayer = gcnew Player(playerInfo[0], Convert::ToInt32(playerInfo[1]));
+				players->Add(newPlayer);
 			}
 			input->Close();
 		}
@@ -56,13 +56,13 @@ namespace fileio{
 		return players;
 	}
 
-	void FileIO::savePlayers(PlayerManager^ players){
+	void FileIO::savePlayers(List<Player^>^ players){
 		String^ fileName = L"players.txt";
 
 		try {
 			StreamWriter^ output = gcnew StreamWriter(fileName);
 
-			for each (Player^ currPlayer in players->Players)
+			for each (Player^ currPlayer in players)
 			{
 				output->WriteLine(currPlayer->Name, currPlayer->Score);
 			}

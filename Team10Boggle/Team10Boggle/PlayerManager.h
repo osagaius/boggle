@@ -23,7 +23,7 @@ namespace model
 		{
 			List<Player^>^ get(){ return this->players; };
 		}
-		
+
 	private:
 		List<Player^>^ players;
 		bool playerExists(String^ name);
