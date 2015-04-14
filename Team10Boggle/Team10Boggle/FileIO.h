@@ -17,7 +17,8 @@ namespace fileio{
 		FileIO();
 		Trie^ loadDictionary();
 		PlayerManager^ loadPlayers();
+		void savePlayers(PlayerManager^ players);
 	private:
-		List<String^>^ splitString(String^ text);
+		array<String^>^ splitString(String^ text);
 	};
 }

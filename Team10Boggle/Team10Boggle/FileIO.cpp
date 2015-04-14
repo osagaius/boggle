@@ -44,8 +44,8 @@ namespace fileio{
 
 			String^ line;
 			while ((line = input->ReadLine()) != nullptr) {
-				List<String^>^ playerInfo = splitString(line);
-				//players->addPlayer(line);
+				array<String^>^ playerInfo = splitString(line);
+				players->addPlayer(playerInfo[0], Convert::ToInt32(playerInfo[1]));
 			}
 			input->Close();
 		}
@@ -56,16 +56,33 @@ namespace fileio{
 		return players;
 	}
 
-	List<String^>^ FileIO::splitString(String^ text) {
-		//stringstream ss(text);
-		List<String^>^ result = gcnew List<String^>();
+	void FileIO::savePlayers(PlayerManager^ players){
+		String^ fileName = L"players.txt";
 
-		/*while (ss.good()) {
-			string substr;
-			getline(ss, substr, ',');
-			result.push_back(substr);
-		}*/
+		try {
+			StreamWriter^ output = gcnew StreamWriter(fileName);
 
-		return result;
+			for each (Player^ currPlayer in players->Players)
+			{
+				output->WriteLine(currPlayer->Name, currPlayer->Score);
+			}
+			output->Close();
+		}
+		catch (Exception^ exception) {
+			Console::WriteLine(L"Error: " + exception->Message);
+		}
+	}
+
+	array<String^>^ FileIO::splitString(String^ text) {
+		String^ delimStr = ",";
+		Console::WriteLine("delimiter : '{0}'", delimStr);
+		array<Char>^ delimiter = delimStr->ToCharArray();
+		array<String^>^ words;
+		String^ line = "one,two";
+
+		Console::WriteLine("text : '{0}'", line);
+		words = line->Split(delimiter);
+		Console::WriteLine("Number of Words : {0}", words->Length);
+		return words;
 	}
 }
