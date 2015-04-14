@@ -14,7 +14,7 @@
     <ProjectGuid>{735F355B-6AB1-4DC2-8188-26BF8C19120A}</ProjectGuid>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <Keyword>ManagedCProj</Keyword>
-    <RootNamespace>Team10Boggle</RootNamespace>
+    <RootNamespace>view</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -59,7 +59,14 @@
       <SubSystem>Windows</SubSystem>
       <EntryPointSymbol>main</EntryPointSymbol>
       <AdditionalLibraryDirectories>winmm.lib</AdditionalLibraryDirectories>
+      <EmbedManagedResourceFile>BoggleForm.resx</EmbedManagedResourceFile>
+      <AssemblyLinkResource>
+      </AssemblyLinkResource>
     </Link>
+    <EmbeddedResource />
+    <EmbeddedResource>
+      <LogicalName>$(IntDir)\$(RootNamespace)::$(InputName)::resources</LogicalName>
+    </EmbeddedResource>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -109,6 +116,9 @@
   <ItemGroup>
     <EmbeddedResource Include="BoggleForm.resx">
       <DependentUpon>BoggleForm.h</DependentUpon>
+      <LogicalName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </LogicalName>
+      <FileType>Resx</FileType>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

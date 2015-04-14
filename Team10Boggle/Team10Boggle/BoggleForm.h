@@ -2,8 +2,9 @@
 #include "Boggle.h"
 #include "Die.h"
 #include "DieCollection.h"
-
-using namespace model;
+#include "BoggleForm.h"
+namespace view{
+	using namespace model;
 
 	using namespace System;
 	using namespace System::ComponentModel;
@@ -38,36 +39,37 @@ using namespace model;
 
 	private:
 		ResourceManager^ resourceManager;
-		int draggedOverBoxCount;
-		CheckBox^ getCheckBox(int column, int row);
-		bool clickedValidCheckedBox(CheckBox^ checkBox);
-		bool allUnchecked;
-		bool mouseDown;
-		bool clickedValidUncheckedBox(CheckBox^ checkBox);
-		void handleChangedCheckState(CheckState checkState, CheckBox^ checkButton);
-		void updateCheckedBoxesList();
-		void updateLastBoxChecked();
-		void removeEntry(CheckBox^ checkBox);
-		void refresh();
-		void addEntry(CheckBox^ checkBox);
-		void removeLastLetterFromWord(CheckBox^ checkBox);
-		void addLetterToWord();
-		void calculateNeighborsAt(Row neighboringRow);
-		bool lastBoxCheckedHas(Row neighboringRow);
-		bool lastBoxCheckedHas(Column neighboringColumn);
-		void updateCurrentNeighbors();
-		void setAllBoxesUncheckable();
-		void uncheckAllBoxes();
-		Boggle^ boggle;
-		int second;
-		int minute;
-		CheckBox^ lastBoxChecked;
-		String^ secondString;
-		String^ minuteString;
-		System::ComponentModel::BackgroundWorker^  backgroundWorker1;
-		array<CheckBox^, 2>^ diceButtons;
-		List<CheckBox^>^ checkedBoxes;
-		List<CheckBox^>^ currentNeighbors;
+	private: System::Windows::Forms::Button^  button2;
+			 int draggedOverBoxCount;
+			 CheckBox^ getCheckBox(int column, int row);
+			 bool clickedValidCheckedBox(CheckBox^ checkBox);
+			 bool allUnchecked;
+			 bool mouseDown;
+			 bool clickedValidUncheckedBox(CheckBox^ checkBox);
+			 void handleChangedCheckState(CheckState checkState, CheckBox^ checkButton);
+			 void updateCheckedBoxesList();
+			 void updateLastBoxChecked();
+			 void removeEntry(CheckBox^ checkBox);
+			 void refresh();
+			 void addEntry(CheckBox^ checkBox);
+			 void removeLastLetterFromWord(CheckBox^ checkBox);
+			 void addLetterToWord();
+			 void calculateNeighborsAt(Row neighboringRow);
+			 bool lastBoxCheckedHas(Row neighboringRow);
+			 bool lastBoxCheckedHas(Column neighboringColumn);
+			 void updateCurrentNeighbors();
+			 void setAllBoxesUncheckable();
+			 void uncheckAllBoxes();
+			 Boggle^ boggle;
+			 int second;
+			 int minute;
+			 CheckBox^ lastBoxChecked;
+			 String^ secondString;
+			 String^ minuteString;
+			 System::ComponentModel::BackgroundWorker^  backgroundWorker1;
+			 array<CheckBox^, 2>^ diceButtons;
+			 List<CheckBox^>^ checkedBoxes;
+			 List<CheckBox^>^ currentNeighbors;
 	private: System::Windows::Forms::TableLayoutPanel^  checkBoxContainer;
 
 
@@ -108,3 +110,4 @@ using namespace model;
 
 	};
 
+}

@@ -1,6 +1,6 @@
 #include <tchar.h>
 #include "BoggleForm.h"
-
+using namespace view;
 
 
 [STAThreadAttribute]
