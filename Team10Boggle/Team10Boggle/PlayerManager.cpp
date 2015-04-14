@@ -14,10 +14,20 @@ namespace model
 	PlayerManager::~PlayerManager()
 	{
 	}
-
 	void PlayerManager::loadPlayers()
 	{
 
 	}
 
+	void PlayerManager::addPlayer(String^ name, int score){
+
+	}
+
+	void PlayerManager::updatePlayer(String^ name){
+
+	}
+
+	void PlayerManager::savePlayers(){
+
+	}
 }

@@ -110,10 +110,6 @@
     <EmbeddedResource Include="BoggleForm.resx">
       <DependentUpon>BoggleForm.h</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Resource.resx" />
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="..\..\..\..\..\Desktop\buttonbackground.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

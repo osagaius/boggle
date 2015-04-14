@@ -3,6 +3,7 @@
 #using <System.Drawing.dll>
 #using <System.Windows.Forms.dll>
 #include "Trie.h"
+#include "PlayerManager.h"
 using namespace model;
 using namespace System;
 using namespace System::Collections::Generic;
