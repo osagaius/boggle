@@ -26,7 +26,6 @@ using namespace System::Resources;
 		this->lastBoxChecked = gcnew CheckBox();
 		this->allUnchecked = true;
 		this->mouseDown = false;
-
 		this->draggedOverBoxCount = 0;
 
 	}
