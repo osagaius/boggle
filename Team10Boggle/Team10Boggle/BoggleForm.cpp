@@ -14,8 +14,6 @@ using namespace System::Resources;
 
 
 	BoggleForm::BoggleForm(){
-		this->resourceManager = gcnew
-			Resources::ResourceManager(L"Team10Boggle.Resource", this->GetType()->Assembly);
 		this->InitializeComponent();
 		this->boggle = gcnew Boggle();
 		this->listBox1->DataSource = this->boggle->playersWords;
@@ -30,7 +28,6 @@ using namespace System::Resources;
 		this->mouseDown = false;
 
 		this->draggedOverBoxCount = 0;
-		//this->checkBox2->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resourceManager->GetObject(L"buttonbackground")));
 
 	}
 
