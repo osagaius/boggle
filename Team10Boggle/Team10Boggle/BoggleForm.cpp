@@ -12,7 +12,7 @@ using namespace model;
 using namespace System::Threading;
 using namespace System::Resources;
 
-
+namespace view{
 	BoggleForm::BoggleForm(){
 		this->InitializeComponent();
 		this->boggle = gcnew Boggle();
@@ -83,7 +83,7 @@ using namespace System::Resources;
 			this->button1_Click(button1, e);
 			this->draggedOverBoxCount = 0;
 		}
-		
+
 		mouseDown = false;
 	}
 	System::Void BoggleForm::checkBox_MouseHover(System::Object^  sender, System::EventArgs^  e){
@@ -107,7 +107,7 @@ using namespace System::Resources;
 		else {
 			PlaySound(L"wrong.wav", NULL, SND_FILENAME | SND_ASYNC);
 		}
-		
+
 		this->uncheckAllBoxes();
 		this->setAllBoxesUncheckable();
 		this->currentNeighbors->Clear();
@@ -262,4 +262,4 @@ using namespace System::Resources;
 		}
 	}
 
-
+}
