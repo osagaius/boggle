@@ -4,6 +4,7 @@ using namespace System::Configuration;
 using namespace System::Diagnostics;
 using namespace System::Collections::Generic;
 #include "Player.h"
+#include "FileIO.h"
 
 /// <summary>
 /// Models a collection of Players.
@@ -16,12 +17,16 @@ namespace model
 		PlayerManager();
 		virtual ~PlayerManager();
 		void addPlayer(String^ name, int score);
-		void updatePlayer(String^ name);
-		
+		void updatePlayer(String^ name, int newScore);
+
+		property List<Player^>^ Players
+		{
+			List<Player^>^ get(){ return this->players; };
+		}
+
 	private:
 		List<Player^>^ players;
-		void loadPlayers();
-		void savePlayers();
+		bool playerExists(String^ name);
 	};
 
 }

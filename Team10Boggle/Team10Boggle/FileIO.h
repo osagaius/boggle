@@ -4,6 +4,7 @@
 #using <System.Windows.Forms.dll>
 #include "Trie.h"
 #include "PlayerManager.h"
+#include "Player.h"
 using namespace model;
 using namespace System;
 using namespace System::Collections::Generic;
@@ -16,8 +17,9 @@ namespace fileio{
 	public:
 		FileIO();
 		Trie^ loadDictionary();
-		PlayerManager^ loadPlayers();
+		List<Player^>^ loadPlayers();
+		void savePlayers(List<Player^>^ players);
 	private:
-		List<String^>^ splitString(String^ text);
+		array<String^>^ splitString(String^ text);
 	};
 }
