@@ -3,6 +3,7 @@
 #include "Die.h"
 #include "DieCollection.h"
 #include "BoggleForm.h"
+#include "PlayerManager.h"
 delegate void IterateFunction(int, int);
 namespace view{
 	using namespace model;
@@ -40,9 +41,25 @@ namespace view{
 			}
 		}
 
-	private:
+	private: PlayerManager^ playerManager;
 
 	private: System::Windows::Forms::Button^  rotateButton;
+	private: System::Windows::Forms::Label^  label4;
+	private: System::Windows::Forms::Panel^  endGamePanel;
+
+	private: System::Windows::Forms::Panel^  endGamePrompt;
+
+	private: System::Windows::Forms::Button^  submitNameButton;
+
+
+	private: System::Windows::Forms::Label^  nameLabel;
+	private: System::Windows::Forms::Label^  timeUpLabel;
+	private: System::Windows::Forms::ComboBox^  nameBox;
+
+
+
+
+
 			 ObservableCollection<String^>^ letters;
 			 System::Void rotate_Letters(Object^, NotifyCollectionChangedEventArgs^ e);
 			 int draggedOverBoxCount;
@@ -101,7 +118,7 @@ namespace view{
 			 System::Windows::Forms::ListBox^  listBox1;
 	private: System::Windows::Forms::Button^  addWordButton;
 			 IterateFunction^ addLetters;
-			 System::Windows::Forms::TextBox^  textBox1;
+
 			 System::Windows::Forms::Label^  label1;
 			 System::Windows::Forms::Label^  label2;
 			 System::Windows::Forms::Timer^  timer1;
@@ -120,6 +137,22 @@ namespace view{
 			 System::Void button_GotFocus(System::Object^  sender, System::EventArgs^  e);
 			 System::Void rotateButton_Click(System::Object^  sender, System::EventArgs^  e);
 
-	};
+	private: System::Void listBox1_DrawItem(System::Object^  sender, System::Windows::Forms::DrawItemEventArgs^  e) {
+		ListBox^ list = static_cast<ListBox^>(sender);
+		if (e->Index > -1)
+		{
+			Object^ item = list->Items[e->Index];
+			e->DrawBackground();
+			e->DrawFocusRectangle();
+			Brush^ brush = gcnew SolidBrush(e->ForeColor);
+			SizeF^ size = e->Graphics->MeasureString(item->ToString(), e->Font);
+			e->Graphics->DrawString(item->ToString(), e->Font, brush, e->Bounds.Left + (e->Bounds.Width / 2 - size->Width / 2), e->Bounds.Top + (e->Bounds.Height / 2 - size->Height / 2));
+		}
+	}
+	private: System::Void nameBox_TextChanged(System::Object^  sender, System::EventArgs^  e);
+
+private: System::Void submitNameButton_Click(System::Object^  sender, System::EventArgs^  e);
+
+};
 
 }

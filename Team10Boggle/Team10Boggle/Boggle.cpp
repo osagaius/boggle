@@ -10,6 +10,13 @@ namespace model{
 		this->score = 0;
 		this->dictionary = fileio->loadDictionary();
 		this->submittedWords = gcnew BindingList<Word^>();
+		this->playerManager = gcnew PlayerManager();
+		this->playerManager->Players = fileio->loadPlayers();
+	}
+
+	void Boggle::sortPlayersByScore(){
+		this->playerManager->Players->Sort();
+		this->playerManager->Players->Reverse();
 	}
 
 	void Boggle::addWord(Word^ word){

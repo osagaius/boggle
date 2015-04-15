@@ -22,11 +22,13 @@ namespace model
 		property List<Player^>^ Players
 		{
 			List<Player^>^ get(){ return this->players; };
+			void set(List<Player^>^ listOfPlayers){ this->players = listOfPlayers; };
 		}
 
 	private:
 		List<Player^>^ players;
 		bool playerExists(String^ name);
+		
 	};
 
 }

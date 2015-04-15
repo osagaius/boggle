@@ -10,11 +10,12 @@ using namespace System::Collections::Generic;
 /// </summary>
 namespace model
 {
-	ref class Player : public Object
+	ref class Player : public IComparable<Player^>
 	{
 	public:
 		Player();
 		Player(String^ name, int score);
+		virtual int CompareTo(Player^ player);
 
 		property String^ Name
 		{

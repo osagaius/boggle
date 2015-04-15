@@ -3,12 +3,15 @@
 #include "Boggle.h"
 #include "Word.h"
 #include <vector>
+#include "FileIO.h"
+#include "PlayerManager.h"
 #include <mmsystem.h>
 #include <Windows.h>
 #pragma comment(lib, "winmm.lib")
 using namespace System::Windows::Input;
 using namespace std;
 using namespace model;
+using namespace fileio;
 using namespace System::Threading;
 using namespace System::Resources;
 
@@ -27,11 +30,20 @@ namespace view{
 		this->allUnchecked = true;
 		this->mouseDown = false;
 		this->draggedOverBoxCount = 0;
+		this->playerManager = gcnew PlayerManager();
 		this->letters = gcnew ObservableCollection<String^>();
 		this->rotateButton->GotFocus += gcnew EventHandler(this, &BoggleForm::button_GotFocus);
 		this->addWordButton->GotFocus += gcnew EventHandler(this, &BoggleForm::button_GotFocus);
 		this->letters->CollectionChanged += gcnew NotifyCollectionChangedEventHandler(this, &BoggleForm::rotate_Letters);
 		
+	}
+	System::Void BoggleForm::nameBox_TextChanged(System::Object^  sender, System::EventArgs^  e){
+		if (this->nameBox->Text == String::Empty){
+			this->submitNameButton->Enabled = false;
+		}
+		else {
+			this->submitNameButton->Enabled = true;
+		}
 	}
 	Void BoggleForm::rotate_Letters(Object^  sender, NotifyCollectionChangedEventArgs^ e){
 		if (e->Action == NotifyCollectionChangedAction::Reset){
@@ -40,9 +52,19 @@ namespace view{
 		}
 	}
 
+	System::Void BoggleForm::submitNameButton_Click(System::Object^  sender, System::EventArgs^  e){
+		this->boggle->Players->addPlayer(this->nameBox->Text, this->boggle->PlayerScore);
+		FileIO^ fileio = gcnew FileIO();
+		this->boggle->sortPlayersByScore();
+		fileio->savePlayers(this->boggle->Players->Players);
+		this->endGamePrompt->Visible = false;
+	}
+
 	Void BoggleForm::BoggleForm_Load(Object^  sender, EventArgs^  e) {
 		DieCollection^ dice = gcnew DieCollection();
-
+		for each (Player^ player in this->boggle->Players->Players){
+			this->nameBox->Items->Add(player->Name);
+		}
 		for (int i = 0; i < 4; i++){
 			for (int j = 0; j < 4; j++){
 				this->diceButtons[i, j] = this->getCheckBox(j, i);
@@ -136,7 +158,7 @@ namespace view{
 		}
 	
 	System::Void BoggleForm::addWordButton_Click(System::Object^  sender, System::EventArgs^  e){
-		Word^ word = gcnew Word(this->textBox1->Text);
+		Word^ word = gcnew Word(this->label4->Text);
 		if (this->boggle->isDefinedWord(word) && word->length > 2 && !this->boggle->playersWords->Contains(word)){
 			this->boggle->addWord(word);
 			this->boggle->scoreWord(word);
@@ -173,6 +195,8 @@ namespace view{
 		else if (minute == 0 && second == 0){
 			this->label3->Text = "0:00";
 			this->timer1->Stop();
+			this->endGamePanel->Visible = true;
+			this->endGamePanel->BringToFront();
 		}
 		else {
 			this->label3->Text = minuteString + ":" + secondString;
@@ -215,12 +239,12 @@ namespace view{
 	}
 
 	void BoggleForm::addLetterToWord(){
-		this->textBox1->Text += this->lastBoxChecked->Text->ToUpper();
+		this->label4->Text += this->lastBoxChecked->Text->ToUpper();
 	}
 
 	void BoggleForm::removeLastLetterFromWord(CheckBox^ checkBox){
 
-		this->textBox1->Text = this->textBox1->Text->Replace(checkBox->Text->ToUpper(), "");
+		this->label4->Text = this->label4->Text->Replace(checkBox->Text->ToUpper(), "");
 	}
 
 	void BoggleForm::updateLastBoxChecked(){

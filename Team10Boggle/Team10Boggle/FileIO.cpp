@@ -38,8 +38,10 @@ namespace fileio{
 
 		String^ fileName = L"players.txt";
 
+		StreamReader^ input;
+
 		try {
-			StreamReader^ input = File::OpenText(fileName);
+			input = File::OpenText(fileName);
 
 			String^ line;
 			while ((line = input->ReadLine()) != nullptr) {
@@ -53,6 +55,7 @@ namespace fileio{
 			Console::WriteLine(L"Error: " + exception->Message);
 		}
 
+
 		return players;
 	}
 
@@ -64,7 +67,7 @@ namespace fileio{
 
 			for each (Player^ currPlayer in players)
 			{
-				output->WriteLine(currPlayer->Name, currPlayer->Score);
+				output->WriteLine(currPlayer->Name + "," + currPlayer->Score);
 			}
 			output->Close();
 		}
@@ -75,14 +78,12 @@ namespace fileio{
 
 	array<String^>^ FileIO::splitString(String^ text) {
 		String^ delimStr = ",";
-		Console::WriteLine("delimiter : '{0}'", delimStr);
+
 		array<Char>^ delimiter = delimStr->ToCharArray();
 		array<String^>^ words;
-		String^ line = "one,two";
 
-		Console::WriteLine("text : '{0}'", line);
-		words = line->Split(delimiter);
-		Console::WriteLine("Number of Words : {0}", words->Length);
+		words = text->Split(delimiter);
+
 		return words;
 	}
 }

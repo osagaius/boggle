@@ -29,14 +29,22 @@ namespace view{
 		this->checkBox2 = (gcnew System::Windows::Forms::CheckBox());
 		this->listBox1 = (gcnew System::Windows::Forms::ListBox());
 		this->addWordButton = (gcnew System::Windows::Forms::Button());
-		this->textBox1 = (gcnew System::Windows::Forms::TextBox());
 		this->label1 = (gcnew System::Windows::Forms::Label());
 		this->label2 = (gcnew System::Windows::Forms::Label());
 		this->timer1 = (gcnew System::Windows::Forms::Timer(this->components));
 		this->label3 = (gcnew System::Windows::Forms::Label());
 		this->columnHeader1 = (gcnew System::Windows::Forms::ColumnHeader());
 		this->rotateButton = (gcnew System::Windows::Forms::Button());
+		this->label4 = (gcnew System::Windows::Forms::Label());
+		this->endGamePanel = (gcnew System::Windows::Forms::Panel());
+		this->endGamePrompt = (gcnew System::Windows::Forms::Panel());
+		this->submitNameButton = (gcnew System::Windows::Forms::Button());
+		this->nameLabel = (gcnew System::Windows::Forms::Label());
+		this->timeUpLabel = (gcnew System::Windows::Forms::Label());
+		this->nameBox = (gcnew System::Windows::Forms::ComboBox());
 		this->checkBoxContainer->SuspendLayout();
+		this->endGamePanel->SuspendLayout();
+		this->endGamePrompt->SuspendLayout();
 		this->SuspendLayout();
 		// 
 		// checkBoxContainer
@@ -530,14 +538,16 @@ namespace view{
 		// 
 		// listBox1
 		// 
-		this->listBox1->FormattingEnabled = true;
+		this->listBox1->DrawMode = System::Windows::Forms::DrawMode::OwnerDrawFixed;
+		this->listBox1->Enabled = false;
 		this->listBox1->IntegralHeight = false;
-		this->listBox1->Location = System::Drawing::Point(311, 19);
+		this->listBox1->Location = System::Drawing::Point(274, 33);
 		this->listBox1->Margin = System::Windows::Forms::Padding(3, 4, 3, 4);
 		this->listBox1->Name = L"listBox1";
 		this->listBox1->SelectionMode = System::Windows::Forms::SelectionMode::None;
-		this->listBox1->Size = System::Drawing::Size(91, 214);
+		this->listBox1->Size = System::Drawing::Size(129, 224);
 		this->listBox1->TabIndex = 3;
+		this->listBox1->DrawItem += gcnew System::Windows::Forms::DrawItemEventHandler(this, &BoggleForm::listBox1_DrawItem);
 		this->listBox1->MouseUp += gcnew System::Windows::Forms::MouseEventHandler(this, &BoggleForm::checkBox_MouseUp);
 		// 
 		// addWordButton
@@ -557,19 +567,10 @@ namespace view{
 		this->addWordButton->Click += gcnew System::EventHandler(this, &BoggleForm::addWordButton_Click);
 		this->addWordButton->GotFocus += gcnew System::EventHandler(this, &BoggleForm::button_GotFocus);
 		// 
-		// textBox1
-		// 
-		this->textBox1->Location = System::Drawing::Point(311, 0);
-		this->textBox1->Margin = System::Windows::Forms::Padding(3, 4, 3, 4);
-		this->textBox1->Name = L"textBox1";
-		this->textBox1->Size = System::Drawing::Size(91, 20);
-		this->textBox1->TabIndex = 5;
-		this->textBox1->MouseUp += gcnew System::Windows::Forms::MouseEventHandler(this, &BoggleForm::checkBox_MouseUp);
-		// 
 		// label1
 		// 
 		this->label1->AutoSize = true;
-		this->label1->Location = System::Drawing::Point(308, 237);
+		this->label1->Location = System::Drawing::Point(308, 261);
 		this->label1->Name = L"label1";
 		this->label1->Size = System::Drawing::Size(38, 13);
 		this->label1->TabIndex = 6;
@@ -578,7 +579,7 @@ namespace view{
 		// label2
 		// 
 		this->label2->AutoSize = true;
-		this->label2->Location = System::Drawing::Point(352, 237);
+		this->label2->Location = System::Drawing::Point(352, 261);
 		this->label2->Name = L"label2";
 		this->label2->Size = System::Drawing::Size(13, 13);
 		this->label2->TabIndex = 7;
@@ -587,13 +588,13 @@ namespace view{
 		// timer1
 		// 
 		this->timer1->Enabled = true;
-		this->timer1->Interval = 1000;
+		this->timer1->Interval = 200;
 		this->timer1->Tick += gcnew System::EventHandler(this, &BoggleForm::timer1_Tick);
 		// 
 		// label3
 		// 
 		this->label3->AutoSize = true;
-		this->label3->Location = System::Drawing::Point(308, 250);
+		this->label3->Location = System::Drawing::Point(308, 274);
 		this->label3->Name = L"label3";
 		this->label3->Size = System::Drawing::Size(28, 13);
 		this->label3->TabIndex = 8;
@@ -617,18 +618,89 @@ namespace view{
 		this->rotateButton->Click += gcnew System::EventHandler(this, &BoggleForm::rotateButton_Click);
 		this->rotateButton->GotFocus += gcnew System::EventHandler(this, &BoggleForm::button_GotFocus);
 		// 
+		// label4
+		// 
+		this->label4->BackColor = System::Drawing::Color::Silver;
+		this->label4->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
+		this->label4->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.75F));
+		this->label4->Location = System::Drawing::Point(274, 13);
+		this->label4->Name = L"label4";
+		this->label4->Size = System::Drawing::Size(129, 20);
+		this->label4->TabIndex = 10;
+		this->label4->TextAlign = System::Drawing::ContentAlignment::TopCenter;
+		// 
+		// endGamePanel
+		// 
+		this->endGamePanel->Controls->Add(this->endGamePrompt);
+		this->endGamePanel->Location = System::Drawing::Point(0, 0);
+		this->endGamePanel->Name = L"endGamePanel";
+		this->endGamePanel->Size = System::Drawing::Size(415, 292);
+		this->endGamePanel->TabIndex = 11;
+		this->endGamePanel->Visible = false;
+		// 
+		// endGamePrompt
+		// 
+		this->endGamePrompt->Controls->Add(this->nameBox);
+		this->endGamePrompt->Controls->Add(this->submitNameButton);
+		this->endGamePrompt->Controls->Add(this->nameLabel);
+		this->endGamePrompt->Controls->Add(this->timeUpLabel);
+		this->endGamePrompt->Location = System::Drawing::Point(105, 77);
+		this->endGamePrompt->Name = L"endGamePrompt";
+		this->endGamePrompt->Size = System::Drawing::Size(200, 100);
+		this->endGamePrompt->TabIndex = 0;
+		// 
+		// submitNameButton
+		// 
+		this->submitNameButton->Enabled = false;
+		this->submitNameButton->Location = System::Drawing::Point(169, 43);
+		this->submitNameButton->Name = L"submitNameButton";
+		this->submitNameButton->Size = System::Drawing::Size(28, 23);
+		this->submitNameButton->TabIndex = 3;
+		this->submitNameButton->Text = L"button1";
+		this->submitNameButton->UseVisualStyleBackColor = true;
+		this->submitNameButton->Click += gcnew System::EventHandler(this, &BoggleForm::submitNameButton_Click);
+		// 
+		// nameLabel
+		// 
+		this->nameLabel->AutoSize = true;
+		this->nameLabel->Location = System::Drawing::Point(3, 48);
+		this->nameLabel->Name = L"nameLabel";
+		this->nameLabel->Size = System::Drawing::Size(38, 13);
+		this->nameLabel->TabIndex = 1;
+		this->nameLabel->Text = L"Name:";
+		// 
+		// timeUpLabel
+		// 
+		this->timeUpLabel->AutoSize = true;
+		this->timeUpLabel->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 15.25F));
+		this->timeUpLabel->Location = System::Drawing::Point(50, 12);
+		this->timeUpLabel->Name = L"timeUpLabel";
+		this->timeUpLabel->Size = System::Drawing::Size(113, 25);
+		this->timeUpLabel->TabIndex = 0;
+		this->timeUpLabel->Text = L"Time\'s Up!";
+		// 
+		// nameBox
+		// 
+		this->nameBox->FormattingEnabled = true;
+		this->nameBox->Location = System::Drawing::Point(42, 43);
+		this->nameBox->Name = L"nameBox";
+		this->nameBox->Size = System::Drawing::Size(121, 21);
+		this->nameBox->TabIndex = 4;
+		this->nameBox->TextChanged += gcnew System::EventHandler(this, &BoggleForm::nameBox_TextChanged);
+		// 
 		// BoggleForm
 		// 
 		this->AcceptButton = this->addWordButton;
 		this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 		this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 		this->AutoValidate = System::Windows::Forms::AutoValidate::Disable;
-		this->ClientSize = System::Drawing::Size(434, 323);
+		this->ClientSize = System::Drawing::Size(415, 292);
+		this->Controls->Add(this->endGamePanel);
+		this->Controls->Add(this->label4);
 		this->Controls->Add(this->rotateButton);
 		this->Controls->Add(this->label3);
 		this->Controls->Add(this->label2);
 		this->Controls->Add(this->label1);
-		this->Controls->Add(this->textBox1);
 		this->Controls->Add(this->addWordButton);
 		this->Controls->Add(this->listBox1);
 		this->Controls->Add(this->checkBoxContainer);
@@ -640,6 +712,9 @@ namespace view{
 		this->Load += gcnew System::EventHandler(this, &BoggleForm::BoggleForm_Load);
 		this->MouseUp += gcnew System::Windows::Forms::MouseEventHandler(this, &BoggleForm::checkBox_MouseUp);
 		this->checkBoxContainer->ResumeLayout(false);
+		this->endGamePanel->ResumeLayout(false);
+		this->endGamePrompt->ResumeLayout(false);
+		this->endGamePrompt->PerformLayout();
 		this->ResumeLayout(false);
 		this->PerformLayout();
 

@@ -5,6 +5,7 @@
 #using <System.Windows.Forms.dll>
 #include "Trie.h"
 #include "Word.h"
+#include "PlayerManager.h"
 using namespace model;
 using namespace System;
 using namespace System::Collections::Generic;
@@ -31,12 +32,19 @@ namespace model{
 			int get(){ return this->score; }
 			void set(int value){ this->score = value; OnPropertyChanged("PlayerScore"); }
 		}
+
+		property PlayerManager^ Players{
+			PlayerManager^ get(){ return this->playerManager; }
+		}
+
 		void addWord(Word^ word);
 		bool isDefinedWord(Word^ word);
 		void scoreWord(Word^ word);
+		void sortPlayersByScore();
 	private:
 		Trie^ dictionary;
 		BindingList<Word^>^ submittedWords;
 		int score;
+		PlayerManager^ playerManager;
 	};
 }

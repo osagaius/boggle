@@ -15,6 +15,10 @@ namespace model
 		this->score = 0;
 	}
 
+	int Player::CompareTo(Player^ obj){
+		return this->Score.CompareTo(obj->Score);
+	}
+
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Player"/> class.
 	/// </summary>
