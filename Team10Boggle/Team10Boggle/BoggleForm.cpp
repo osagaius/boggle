@@ -27,10 +27,20 @@ namespace view{
 		this->allUnchecked = true;
 		this->mouseDown = false;
 		this->draggedOverBoxCount = 0;
-
+		this->letters = gcnew ObservableCollection<String^>();
+		this->rotateButton->GotFocus += gcnew EventHandler(this, &BoggleForm::button_GotFocus);
+		this->addWordButton->GotFocus += gcnew EventHandler(this, &BoggleForm::button_GotFocus);
+		this->letters->CollectionChanged += gcnew NotifyCollectionChangedEventHandler(this, &BoggleForm::rotate_Letters);
+		
+	}
+	Void BoggleForm::rotate_Letters(Object^  sender, NotifyCollectionChangedEventArgs^ e){
+		if (e->Action == NotifyCollectionChangedAction::Reset){
+			this->iterate(gcnew IterateFunction(this, &BoggleForm::addLetter));
+			this->iterate(gcnew IterateFunction(this, &BoggleForm::changeCheckBoxLetter));
+		}
 	}
 
-	System::Void BoggleForm::BoggleForm_Load(System::Object^  sender, System::EventArgs^  e) {
+	Void BoggleForm::BoggleForm_Load(Object^  sender, EventArgs^  e) {
 		DieCollection^ dice = gcnew DieCollection();
 
 		for (int i = 0; i < 4; i++){
@@ -41,6 +51,7 @@ namespace view{
 			}
 		}
 	}
+
 
 	System::Void BoggleForm::checkBox_Click(System::Object^ sender, System::EventArgs^  e){
 		CheckBox^ checkBox = static_cast<CheckBox^>(sender);
@@ -57,7 +68,7 @@ namespace view{
 		}
 
 		this->allUnchecked = (this->checkedBoxes->Count == 0);
-
+		this->AcceptButton->NotifyDefault(false);
 	}
 
 
@@ -70,6 +81,10 @@ namespace view{
 
 	}
 
+	System::Void BoggleForm::button_GotFocus(System::Object^ sender, System::EventArgs^ e){
+		static_cast<Button^>(sender)->NotifyDefault(false);
+	}
+
 	System::Void BoggleForm::checkBox_MouseDown(System::Object^  sender, System::Windows::Forms::MouseEventArgs^  e){
 		mouseDown = true;
 		CheckBox^ checkBox = static_cast<CheckBox^>(sender);
@@ -80,7 +95,7 @@ namespace view{
 
 	System::Void BoggleForm::checkBox_MouseUp(System::Object^  sender, System::Windows::Forms::MouseEventArgs^  e){
 		if (this->draggedOverBoxCount > 0){
-			this->button1_Click(button1, e);
+			this->addWordButton_Click(addWordButton, e);
 			this->draggedOverBoxCount = 0;
 		}
 
@@ -97,7 +112,30 @@ namespace view{
 			checkBox->FlatAppearance->MouseOverBackColor = System::Drawing::Color::RoyalBlue;
 		}
 	}
-	System::Void BoggleForm::button1_Click(System::Object^  sender, System::EventArgs^  e){
+	System::Void BoggleForm::rotateButton_Click(System::Object^  sender, System::EventArgs^  e){
+		this->rotate_Letters(sender, gcnew NotifyCollectionChangedEventArgs(
+										   NotifyCollectionChangedAction::Reset));
+	}
+
+	void BoggleForm::changeCheckBoxLetter(int row, int column){
+		this->getCheckBox(row, column)->Text = letters[0];
+		this->letters->RemoveAt(0);
+	}
+	void BoggleForm::updateLetters(){
+
+	}
+	void BoggleForm::iterate(IterateFunction^ func){
+		for (int i = 0; i < 4; i++){
+			for (int j = 0; j < 4; j++){
+				func(i, j);
+			}
+		}
+	}
+	void BoggleForm::addLetter(int row, int column){
+			this->letters->Add(this->diceButtons[row, 3 - column]->Text);
+		}
+	
+	System::Void BoggleForm::addWordButton_Click(System::Object^  sender, System::EventArgs^  e){
 		Word^ word = gcnew Word(this->textBox1->Text);
 		if (this->boggle->isDefinedWord(word) && word->length > 2 && !this->boggle->playersWords->Contains(word)){
 			this->boggle->addWord(word);

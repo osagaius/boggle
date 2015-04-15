@@ -3,6 +3,7 @@
 #include "Die.h"
 #include "DieCollection.h"
 #include "BoggleForm.h"
+delegate void IterateFunction(int, int);
 namespace view{
 	using namespace model;
 
@@ -13,6 +14,8 @@ namespace view{
 	using namespace System::Data;
 	using namespace System::Drawing;
 	using namespace System::Resources;
+	using namespace System::Collections::ObjectModel;
+	using namespace System::Collections::Specialized;
 
 	/// <summary>
 	/// Summary for BoggleForm
@@ -38,8 +41,10 @@ namespace view{
 		}
 
 	private:
-		ResourceManager^ resourceManager;
-	private: System::Windows::Forms::Button^  button2;
+
+	private: System::Windows::Forms::Button^  rotateButton;
+			 ObservableCollection<String^>^ letters;
+			 System::Void rotate_Letters(Object^, NotifyCollectionChangedEventArgs^ e);
 			 int draggedOverBoxCount;
 			 CheckBox^ getCheckBox(int column, int row);
 			 bool clickedValidCheckedBox(CheckBox^ checkBox);
@@ -60,6 +65,10 @@ namespace view{
 			 void updateCurrentNeighbors();
 			 void setAllBoxesUncheckable();
 			 void uncheckAllBoxes();
+			 void updateLetters();
+			 void iterate(IterateFunction^ func);
+			 void addLetter(int row, int column);
+			 void changeCheckBoxLetter(int row, int column);
 			 Boggle^ boggle;
 			 int second;
 			 int minute;
@@ -90,7 +99,8 @@ namespace view{
 			 System::Windows::Forms::CheckBox^  checkBox3;
 			 System::Windows::Forms::CheckBox^  checkBox2;
 			 System::Windows::Forms::ListBox^  listBox1;
-			 System::Windows::Forms::Button^  button1;
+	private: System::Windows::Forms::Button^  addWordButton;
+			 IterateFunction^ addLetters;
 			 System::Windows::Forms::TextBox^  textBox1;
 			 System::Windows::Forms::Label^  label1;
 			 System::Windows::Forms::Label^  label2;
@@ -101,12 +111,14 @@ namespace view{
 			 System::Void BoggleForm_Load(System::Object^  sender, System::EventArgs^  e);
 			 System::Void checkBox_Click(System::Object^  sender, System::EventArgs^  e);
 			 System::Void checkBox_CheckStateChanged(System::Object^  sender, System::EventArgs^  e);
-			 System::Void button1_Click(System::Object^  sender, System::EventArgs^  e);
+			 System::Void addWordButton_Click(System::Object^  sender, System::EventArgs^  e);
 			 System::Void timer1_Tick(System::Object^  sender, System::EventArgs^  e);
 			 System::Void checkBox_MouseEnter(System::Object^  sender, System::EventArgs^  e);
 			 System::Void checkBox_MouseDown(System::Object^  sender, System::Windows::Forms::MouseEventArgs^  e);
 			 System::Void checkBox_MouseUp(System::Object^  sender, System::Windows::Forms::MouseEventArgs^  e);
 			 System::Void checkBox_MouseHover(System::Object^  sender, System::EventArgs^  e);
+			 System::Void button_GotFocus(System::Object^  sender, System::EventArgs^  e);
+			 System::Void rotateButton_Click(System::Object^  sender, System::EventArgs^  e);
 
 	};
 
