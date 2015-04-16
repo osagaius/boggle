@@ -49,6 +49,7 @@ namespace view{
 		this->mainMenuPanel = (gcnew System::Windows::Forms::Panel());
 		this->highscoresButton = (gcnew System::Windows::Forms::Button());
 		this->startGameButton = (gcnew System::Windows::Forms::Button());
+		this->menuStrip1 = (gcnew System::Windows::Forms::MenuStrip());
 		this->checkBoxContainer->SuspendLayout();
 		this->highScorePanel->SuspendLayout();
 		this->endGamePrompt->SuspendLayout();
@@ -686,9 +687,10 @@ namespace view{
 		this->endGamePrompt->Controls->Add(this->submitNameButton);
 		this->endGamePrompt->Controls->Add(this->nameLabel);
 		this->endGamePrompt->Controls->Add(this->timeUpLabel);
+		this->endGamePrompt->Controls->Add(this->menuStrip1);
 		this->endGamePrompt->Location = System::Drawing::Point(107, 96);
 		this->endGamePrompt->Name = L"endGamePrompt";
-		this->endGamePrompt->Size = System::Drawing::Size(200, 100);
+		this->endGamePrompt->Size = System::Drawing::Size(284, 100);
 		this->endGamePrompt->TabIndex = 12;
 		this->endGamePrompt->Visible = false;
 		// 
@@ -698,7 +700,7 @@ namespace view{
 		this->nameBox->FormattingEnabled = true;
 		this->nameBox->Location = System::Drawing::Point(42, 43);
 		this->nameBox->Name = L"nameBox";
-		this->nameBox->Size = System::Drawing::Size(121, 21);
+		this->nameBox->Size = System::Drawing::Size(169, 21);
 		this->nameBox->TabIndex = 4;
 		this->nameBox->TextChanged += gcnew System::EventHandler(this, &BoggleForm::nameBox_TextChanged);
 		// 
@@ -706,11 +708,11 @@ namespace view{
 		// 
 		this->submitNameButton->Anchor = System::Windows::Forms::AnchorStyles::Right;
 		this->submitNameButton->Enabled = false;
-		this->submitNameButton->Location = System::Drawing::Point(167, 43);
+		this->submitNameButton->Location = System::Drawing::Point(220, 39);
 		this->submitNameButton->Name = L"submitNameButton";
-		this->submitNameButton->Size = System::Drawing::Size(28, 21);
+		this->submitNameButton->Size = System::Drawing::Size(59, 21);
 		this->submitNameButton->TabIndex = 3;
-		this->submitNameButton->Text = L"button1";
+		this->submitNameButton->Text = L"Submit";
 		this->submitNameButton->UseVisualStyleBackColor = true;
 		this->submitNameButton->Click += gcnew System::EventHandler(this, &BoggleForm::submitNameButton_Click);
 		// 
@@ -729,7 +731,7 @@ namespace view{
 		this->timeUpLabel->Anchor = System::Windows::Forms::AnchorStyles::Top;
 		this->timeUpLabel->AutoSize = true;
 		this->timeUpLabel->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 15.25F));
-		this->timeUpLabel->Location = System::Drawing::Point(49, 15);
+		this->timeUpLabel->Location = System::Drawing::Point(91, 15);
 		this->timeUpLabel->Name = L"timeUpLabel";
 		this->timeUpLabel->Size = System::Drawing::Size(113, 25);
 		this->timeUpLabel->TabIndex = 0;
@@ -765,6 +767,14 @@ namespace view{
 		this->startGameButton->UseVisualStyleBackColor = true;
 		this->startGameButton->Click += gcnew System::EventHandler(this, &BoggleForm::startGameButton_Click);
 		// 
+		// menuStrip1
+		// 
+		this->menuStrip1->Location = System::Drawing::Point(0, 0);
+		this->menuStrip1->Name = L"menuStrip1";
+		this->menuStrip1->Size = System::Drawing::Size(282, 24);
+		this->menuStrip1->TabIndex = 5;
+		this->menuStrip1->Text = L"menuStrip1";
+		// 
 		// BoggleForm
 		// 
 		this->AcceptButton = this->addWordButton;
@@ -785,6 +795,7 @@ namespace view{
 		this->Controls->Add(this->highScorePanel);
 		this->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 			static_cast<System::Byte>(0)));
+		this->MainMenuStrip = this->menuStrip1;
 		this->Margin = System::Windows::Forms::Padding(3, 4, 3, 4);
 		this->Name = L"BoggleForm";
 		this->Text = L"BoggleForm";
