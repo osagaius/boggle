@@ -11,6 +11,10 @@ using namespace System::Collections::Generic;
 using namespace System::Windows::Forms;
 using namespace System::Text;
 
+/// <summary>
+/// IO Class that handles reading and writing
+/// game objects from files.
+/// </summary>
 namespace fileio{
 	ref class FileIO
 	{
