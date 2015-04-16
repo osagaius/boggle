@@ -36,15 +36,23 @@ namespace view{
 		this->columnHeader1 = (gcnew System::Windows::Forms::ColumnHeader());
 		this->rotateButton = (gcnew System::Windows::Forms::Button());
 		this->label4 = (gcnew System::Windows::Forms::Label());
-		this->endGamePanel = (gcnew System::Windows::Forms::Panel());
+		this->highScorePanel = (gcnew System::Windows::Forms::Panel());
+		this->mainMenuPanelReturnButton = (gcnew System::Windows::Forms::Button());
+		this->scoreBoard = (gcnew System::Windows::Forms::ListView());
+		this->col1 = (gcnew System::Windows::Forms::ColumnHeader());
+		this->col2 = (gcnew System::Windows::Forms::ColumnHeader());
 		this->endGamePrompt = (gcnew System::Windows::Forms::Panel());
+		this->nameBox = (gcnew System::Windows::Forms::ComboBox());
 		this->submitNameButton = (gcnew System::Windows::Forms::Button());
 		this->nameLabel = (gcnew System::Windows::Forms::Label());
 		this->timeUpLabel = (gcnew System::Windows::Forms::Label());
-		this->nameBox = (gcnew System::Windows::Forms::ComboBox());
+		this->mainMenuPanel = (gcnew System::Windows::Forms::Panel());
+		this->highscoresButton = (gcnew System::Windows::Forms::Button());
+		this->startGameButton = (gcnew System::Windows::Forms::Button());
 		this->checkBoxContainer->SuspendLayout();
-		this->endGamePanel->SuspendLayout();
+		this->highScorePanel->SuspendLayout();
 		this->endGamePrompt->SuspendLayout();
+		this->mainMenuPanel->SuspendLayout();
 		this->SuspendLayout();
 		// 
 		// checkBoxContainer
@@ -588,7 +596,7 @@ namespace view{
 		// timer1
 		// 
 		this->timer1->Enabled = true;
-		this->timer1->Interval = 200;
+		this->timer1->Interval = 1;
 		this->timer1->Tick += gcnew System::EventHandler(this, &BoggleForm::timer1_Tick);
 		// 
 		// label3
@@ -629,32 +637,78 @@ namespace view{
 		this->label4->TabIndex = 10;
 		this->label4->TextAlign = System::Drawing::ContentAlignment::TopCenter;
 		// 
-		// endGamePanel
+		// highScorePanel
 		// 
-		this->endGamePanel->Controls->Add(this->endGamePrompt);
-		this->endGamePanel->Location = System::Drawing::Point(0, 0);
-		this->endGamePanel->Name = L"endGamePanel";
-		this->endGamePanel->Size = System::Drawing::Size(415, 292);
-		this->endGamePanel->TabIndex = 11;
-		this->endGamePanel->Visible = false;
+		this->highScorePanel->Controls->Add(this->mainMenuPanelReturnButton);
+		this->highScorePanel->Controls->Add(this->scoreBoard);
+		this->highScorePanel->Location = System::Drawing::Point(0, 0);
+		this->highScorePanel->Name = L"highScorePanel";
+		this->highScorePanel->Size = System::Drawing::Size(415, 292);
+		this->highScorePanel->TabIndex = 11;
+		this->highScorePanel->Visible = false;
+		// 
+		// mainMenuPanelReturnButton
+		// 
+		this->mainMenuPanelReturnButton->Location = System::Drawing::Point(328, 261);
+		this->mainMenuPanelReturnButton->Name = L"mainMenuPanelReturnButton";
+		this->mainMenuPanelReturnButton->Size = System::Drawing::Size(75, 23);
+		this->mainMenuPanelReturnButton->TabIndex = 4;
+		this->mainMenuPanelReturnButton->Text = L"Main Menu";
+		this->mainMenuPanelReturnButton->UseVisualStyleBackColor = true;
+		this->mainMenuPanelReturnButton->Click += gcnew System::EventHandler(this, &BoggleForm::mainMenuPanelReturnButton_Click);
+		// 
+		// scoreBoard
+		// 
+		this->scoreBoard->Columns->AddRange(gcnew cli::array< System::Windows::Forms::ColumnHeader^  >(2) { this->col1, this->col2 });
+		this->scoreBoard->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 9.25F));
+		this->scoreBoard->Location = System::Drawing::Point(95, 32);
+		this->scoreBoard->Name = L"scoreBoard";
+		this->scoreBoard->Size = System::Drawing::Size(224, 229);
+		this->scoreBoard->TabIndex = 3;
+		this->scoreBoard->UseCompatibleStateImageBehavior = false;
+		this->scoreBoard->View = System::Windows::Forms::View::Details;
+		this->scoreBoard->VisibleChanged += gcnew System::EventHandler(this, &BoggleForm::scoreBoard_SizeChanged);
+		// 
+		// col1
+		// 
+		this->col1->Tag = L"2";
+		this->col1->Text = L"Name";
+		// 
+		// col2
+		// 
+		this->col2->Tag = L"2";
+		this->col2->Text = L"Score";
 		// 
 		// endGamePrompt
 		// 
+		this->endGamePrompt->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
 		this->endGamePrompt->Controls->Add(this->nameBox);
 		this->endGamePrompt->Controls->Add(this->submitNameButton);
 		this->endGamePrompt->Controls->Add(this->nameLabel);
 		this->endGamePrompt->Controls->Add(this->timeUpLabel);
-		this->endGamePrompt->Location = System::Drawing::Point(105, 77);
+		this->endGamePrompt->Location = System::Drawing::Point(107, 96);
 		this->endGamePrompt->Name = L"endGamePrompt";
 		this->endGamePrompt->Size = System::Drawing::Size(200, 100);
-		this->endGamePrompt->TabIndex = 0;
+		this->endGamePrompt->TabIndex = 12;
+		this->endGamePrompt->Visible = false;
+		// 
+		// nameBox
+		// 
+		this->nameBox->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Left | System::Windows::Forms::AnchorStyles::Right));
+		this->nameBox->FormattingEnabled = true;
+		this->nameBox->Location = System::Drawing::Point(42, 43);
+		this->nameBox->Name = L"nameBox";
+		this->nameBox->Size = System::Drawing::Size(121, 21);
+		this->nameBox->TabIndex = 4;
+		this->nameBox->TextChanged += gcnew System::EventHandler(this, &BoggleForm::nameBox_TextChanged);
 		// 
 		// submitNameButton
 		// 
+		this->submitNameButton->Anchor = System::Windows::Forms::AnchorStyles::Right;
 		this->submitNameButton->Enabled = false;
-		this->submitNameButton->Location = System::Drawing::Point(169, 43);
+		this->submitNameButton->Location = System::Drawing::Point(167, 43);
 		this->submitNameButton->Name = L"submitNameButton";
-		this->submitNameButton->Size = System::Drawing::Size(28, 23);
+		this->submitNameButton->Size = System::Drawing::Size(28, 21);
 		this->submitNameButton->TabIndex = 3;
 		this->submitNameButton->Text = L"button1";
 		this->submitNameButton->UseVisualStyleBackColor = true;
@@ -662,8 +716,9 @@ namespace view{
 		// 
 		// nameLabel
 		// 
+		this->nameLabel->Anchor = System::Windows::Forms::AnchorStyles::Left;
 		this->nameLabel->AutoSize = true;
-		this->nameLabel->Location = System::Drawing::Point(3, 48);
+		this->nameLabel->Location = System::Drawing::Point(3, 47);
 		this->nameLabel->Name = L"nameLabel";
 		this->nameLabel->Size = System::Drawing::Size(38, 13);
 		this->nameLabel->TabIndex = 1;
@@ -671,22 +726,44 @@ namespace view{
 		// 
 		// timeUpLabel
 		// 
+		this->timeUpLabel->Anchor = System::Windows::Forms::AnchorStyles::Top;
 		this->timeUpLabel->AutoSize = true;
 		this->timeUpLabel->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 15.25F));
-		this->timeUpLabel->Location = System::Drawing::Point(50, 12);
+		this->timeUpLabel->Location = System::Drawing::Point(49, 15);
 		this->timeUpLabel->Name = L"timeUpLabel";
 		this->timeUpLabel->Size = System::Drawing::Size(113, 25);
 		this->timeUpLabel->TabIndex = 0;
 		this->timeUpLabel->Text = L"Time\'s Up!";
 		// 
-		// nameBox
+		// mainMenuPanel
 		// 
-		this->nameBox->FormattingEnabled = true;
-		this->nameBox->Location = System::Drawing::Point(42, 43);
-		this->nameBox->Name = L"nameBox";
-		this->nameBox->Size = System::Drawing::Size(121, 21);
-		this->nameBox->TabIndex = 4;
-		this->nameBox->TextChanged += gcnew System::EventHandler(this, &BoggleForm::nameBox_TextChanged);
+		this->mainMenuPanel->Controls->Add(this->highscoresButton);
+		this->mainMenuPanel->Controls->Add(this->startGameButton);
+		this->mainMenuPanel->Dock = System::Windows::Forms::DockStyle::Fill;
+		this->mainMenuPanel->Location = System::Drawing::Point(0, 0);
+		this->mainMenuPanel->Name = L"mainMenuPanel";
+		this->mainMenuPanel->Size = System::Drawing::Size(415, 292);
+		this->mainMenuPanel->TabIndex = 13;
+		// 
+		// highscoresButton
+		// 
+		this->highscoresButton->Location = System::Drawing::Point(140, 167);
+		this->highscoresButton->Name = L"highscoresButton";
+		this->highscoresButton->Size = System::Drawing::Size(128, 39);
+		this->highscoresButton->TabIndex = 1;
+		this->highscoresButton->Text = L"View Highscores";
+		this->highscoresButton->UseVisualStyleBackColor = true;
+		this->highscoresButton->Click += gcnew System::EventHandler(this, &BoggleForm::highscoresButton_Click);
+		// 
+		// startGameButton
+		// 
+		this->startGameButton->Location = System::Drawing::Point(140, 122);
+		this->startGameButton->Name = L"startGameButton";
+		this->startGameButton->Size = System::Drawing::Size(128, 39);
+		this->startGameButton->TabIndex = 0;
+		this->startGameButton->Text = L"Start Game";
+		this->startGameButton->UseVisualStyleBackColor = true;
+		this->startGameButton->Click += gcnew System::EventHandler(this, &BoggleForm::startGameButton_Click);
 		// 
 		// BoggleForm
 		// 
@@ -695,7 +772,7 @@ namespace view{
 		this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 		this->AutoValidate = System::Windows::Forms::AutoValidate::Disable;
 		this->ClientSize = System::Drawing::Size(415, 292);
-		this->Controls->Add(this->endGamePanel);
+		this->Controls->Add(this->endGamePrompt);
 		this->Controls->Add(this->label4);
 		this->Controls->Add(this->rotateButton);
 		this->Controls->Add(this->label3);
@@ -704,6 +781,8 @@ namespace view{
 		this->Controls->Add(this->addWordButton);
 		this->Controls->Add(this->listBox1);
 		this->Controls->Add(this->checkBoxContainer);
+		this->Controls->Add(this->mainMenuPanel);
+		this->Controls->Add(this->highScorePanel);
 		this->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 			static_cast<System::Byte>(0)));
 		this->Margin = System::Windows::Forms::Padding(3, 4, 3, 4);
@@ -712,9 +791,10 @@ namespace view{
 		this->Load += gcnew System::EventHandler(this, &BoggleForm::BoggleForm_Load);
 		this->MouseUp += gcnew System::Windows::Forms::MouseEventHandler(this, &BoggleForm::checkBox_MouseUp);
 		this->checkBoxContainer->ResumeLayout(false);
-		this->endGamePanel->ResumeLayout(false);
+		this->highScorePanel->ResumeLayout(false);
 		this->endGamePrompt->ResumeLayout(false);
 		this->endGamePrompt->PerformLayout();
+		this->mainMenuPanel->ResumeLayout(false);
 		this->ResumeLayout(false);
 		this->PerformLayout();
 

@@ -69,6 +69,12 @@
     <ClCompile Include="PlayerManager.cpp">
       <Filter>Source Files\Model</Filter>
     </ClCompile>
+    <ClCompile Include="BoggleController.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MyUserControl.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BoggleForm.h">
@@ -100,6 +106,12 @@
     </ClInclude>
     <ClInclude Include="PlayerManager.h">
       <Filter>Model</Filter>
+    </ClInclude>
+    <ClInclude Include="BoggleController.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MyUserControl.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

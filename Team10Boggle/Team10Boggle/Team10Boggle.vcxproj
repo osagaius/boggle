@@ -87,12 +87,14 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Boggle.cpp" />
+    <ClCompile Include="BoggleController.cpp" />
     <ClCompile Include="BoggleForm.cpp" />
     <ClCompile Include="BoggleFormDesigner.cpp" />
     <ClCompile Include="Die.cpp" />
     <ClCompile Include="DieCollection.cpp" />
     <ClCompile Include="Driver.cpp" />
     <ClCompile Include="FileIO.cpp" />
+    <ClCompile Include="MyUserControl.cpp" />
     <ClCompile Include="Node.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerManager.cpp" />
@@ -101,12 +103,16 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Boggle.h" />
+    <ClInclude Include="BoggleController.h" />
     <ClInclude Include="BoggleForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>
     <ClInclude Include="Die.h" />
     <ClInclude Include="DieCollection.h" />
     <ClInclude Include="FileIO.h" />
+    <ClInclude Include="MyUserControl.h">
+      <FileType>CppControl</FileType>
+    </ClInclude>
     <ClInclude Include="Node.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerManager.h" />
