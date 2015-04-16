@@ -60,8 +60,6 @@ namespace view{
 
 
 
-
-
 	private: System::Windows::Forms::Panel^  endGamePrompt;
 	private: System::Windows::Forms::ComboBox^  nameBox;
 	private: System::Windows::Forms::Button^  submitNameButton;
@@ -87,6 +85,8 @@ namespace view{
 
 
 			 ObservableCollection<String^>^ letters;
+
+	private: System::Windows::Forms::MenuStrip^  menuStrip1;
 			 int draggedOverBoxCount;
 			 CheckBox^ getCheckBox(int column, int row);
 			 bool clickedValidCheckedBox(CheckBox^ checkBox);

@@ -70,7 +70,13 @@
       <Filter>Source Files\Model</Filter>
     </ClCompile>
     <ClCompile Include="BoggleController.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Controller</Filter>
+    </ClCompile>
+    <ClCompile Include="BoggleSolver.cpp">
+      <Filter>Source Files\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="Vertex.cpp">
+      <Filter>Source Files\Model</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -104,8 +110,14 @@
     <ClInclude Include="PlayerManager.h">
       <Filter>Model</Filter>
     </ClInclude>
+    <ClInclude Include="BoggleSolver.h">
+      <Filter>Model</Filter>
+    </ClInclude>
+    <ClInclude Include="Vertex.h">
+      <Filter>Model</Filter>
+    </ClInclude>
     <ClInclude Include="BoggleController.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Controller</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -113,9 +125,6 @@
       <Filter>Resource Files</Filter>
     </EmbeddedResource>
     <EmbeddedResource Include="BoggleForm.resx">
-      <Filter>Resource Files</Filter>
-    </EmbeddedResource>
-    <EmbeddedResource Include="GameBoardControl.resx">
       <Filter>Resource Files</Filter>
     </EmbeddedResource>
   </ItemGroup>
