@@ -6,12 +6,23 @@ using namespace System::Collections::Generic;
 using namespace System::IO;
 using namespace System::Text;
 
+/// <summary>
+/// IO Class that handles reading and writing
+/// game objects from files.
+/// </summary>
 namespace fileio{
+	/// <summary>
+	/// Initializes a new instance of the <see cref="FileIO"/> class.
+	/// </summary>
 	FileIO::FileIO()
 	{
 
 	}
 
+	/// <summary>
+	/// Loads the dictionary.
+	/// </summary>
+	/// <returns></returns>
 	Trie^ FileIO::loadDictionary(){
 		Trie^ trie = gcnew Trie();
 
@@ -33,6 +44,10 @@ namespace fileio{
 		return trie;
 	}
 
+	/// <summary>
+	/// Loads the players.
+	/// </summary>
+	/// <returns></returns>
 	List<Player^>^ FileIO::loadPlayers(){
 		List<Player^>^ players = gcnew List<Player^>();
 
@@ -59,6 +74,10 @@ namespace fileio{
 		return players;
 	}
 
+	/// <summary>
+	/// Saves the players.
+	/// </summary>
+	/// <param name="players">The players.</param>
 	void FileIO::savePlayers(List<Player^>^ players){
 		String^ fileName = L"players.txt";
 
