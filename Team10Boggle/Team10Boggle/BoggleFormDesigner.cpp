@@ -49,10 +49,13 @@ namespace view{
 		this->mainMenuPanel = (gcnew System::Windows::Forms::Panel());
 		this->highscoresButton = (gcnew System::Windows::Forms::Button());
 		this->startGameButton = (gcnew System::Windows::Forms::Button());
+		this->panel1 = (gcnew System::Windows::Forms::Panel());
+		this->listBox2 = (gcnew System::Windows::Forms::ListBox());
 		this->checkBoxContainer->SuspendLayout();
 		this->highScorePanel->SuspendLayout();
 		this->endGamePrompt->SuspendLayout();
 		this->mainMenuPanel->SuspendLayout();
+		this->panel1->SuspendLayout();
 		this->SuspendLayout();
 		// 
 		// checkBoxContainer
@@ -596,7 +599,7 @@ namespace view{
 		// timer1
 		// 
 		this->timer1->Enabled = true;
-		this->timer1->Interval = 1;
+		this->timer1->Interval = 1000;
 		this->timer1->Tick += gcnew System::EventHandler(this, &BoggleForm::timer1_Tick);
 		// 
 		// label3
@@ -765,6 +768,28 @@ namespace view{
 		this->startGameButton->UseVisualStyleBackColor = true;
 		this->startGameButton->Click += gcnew System::EventHandler(this, &BoggleForm::startGameButton_Click);
 		// 
+		// panel1
+		// 
+		this->panel1->Controls->Add(this->listBox2);
+		this->panel1->Dock = System::Windows::Forms::DockStyle::Fill;
+		this->panel1->Location = System::Drawing::Point(0, 0);
+		this->panel1->Name = L"panel1";
+		this->panel1->Size = System::Drawing::Size(415, 292);
+		this->panel1->TabIndex = 14;
+		this->panel1->Visible = false;
+		// 
+		// listBox2
+		// 
+		this->listBox2->Anchor = System::Windows::Forms::AnchorStyles::Top;
+		this->listBox2->ColumnWidth = 40;
+		this->listBox2->FormattingEnabled = true;
+		this->listBox2->Location = System::Drawing::Point(92, 52);
+		this->listBox2->MultiColumn = true;
+		this->listBox2->Name = L"listBox2";
+		this->listBox2->SelectionMode = System::Windows::Forms::SelectionMode::None;
+		this->listBox2->Size = System::Drawing::Size(231, 186);
+		this->listBox2->TabIndex = 0;
+		// 
 		// BoggleForm
 		// 
 		this->AcceptButton = this->addWordButton;
@@ -783,6 +808,7 @@ namespace view{
 		this->Controls->Add(this->checkBoxContainer);
 		this->Controls->Add(this->mainMenuPanel);
 		this->Controls->Add(this->highScorePanel);
+		this->Controls->Add(this->panel1);
 		this->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 			static_cast<System::Byte>(0)));
 		this->Margin = System::Windows::Forms::Padding(3, 4, 3, 4);
@@ -795,6 +821,7 @@ namespace view{
 		this->endGamePrompt->ResumeLayout(false);
 		this->endGamePrompt->PerformLayout();
 		this->mainMenuPanel->ResumeLayout(false);
+		this->panel1->ResumeLayout(false);
 		this->ResumeLayout(false);
 		this->PerformLayout();
 

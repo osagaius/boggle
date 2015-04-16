@@ -43,7 +43,7 @@ namespace model
 
 	void BoggleSolver::setValidWords(Trie^ lexicon) {
 		for each (String^ currWord in this->allWords){
-			if (lexicon->searchWord(currWord)) {
+			if (lexicon->searchWord(currWord) && !validWords->Contains(currWord)) {
 				this->validWords->Add(currWord);
 			}
 		}

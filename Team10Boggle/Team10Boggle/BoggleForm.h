@@ -87,6 +87,9 @@ namespace view{
 			 ObservableCollection<String^>^ letters;
 
 	private: System::Windows::Forms::MenuStrip^  menuStrip1;
+	private: System::Windows::Forms::Panel^  panel1;
+	private: System::Windows::Forms::ListBox^  listBox2;
+
 			 int draggedOverBoxCount;
 			 CheckBox^ getCheckBox(int column, int row);
 			 bool clickedValidCheckedBox(CheckBox^ checkBox);

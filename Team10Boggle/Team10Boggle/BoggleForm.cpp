@@ -38,6 +38,31 @@ namespace view{
 		this->gameRunning = false;
 		this->mainMenuPanel->BringToFront();
 	}
+
+	/// <summary>
+	/// Gets the missed words.
+	/// </summary>
+	System::Void BoggleForm::getMissedWords() {
+		array<String^, 2>^ board = getBoardArray();
+		this->boggleSolver = gcnew BoggleSolver(this->boggle->Dictionary, board);
+		for each (String^ word in this->boggleSolver->Words) {
+			Word^ currWord = gcnew Word(word);
+			if (word->Length > 2){
+				if (!this->listBox1->Items->Contains(word->ToString())) {
+					this->missedWords->Add(word);
+					this->listBox2->Items->Add(word);
+				}
+				else
+				{
+					this->missedWords->Add(word);
+					this->listBox2->Items->Add(word);
+					this->listBox2->ForeColor.Red;
+				}
+			}
+			
+		}
+	}
+
 	System::Void BoggleForm::nameBox_TextChanged(System::Object^  sender, System::EventArgs^  e){
 		if (this->nameBox->Text == String::Empty){
 			this->submitNameButton->Enabled = false;
@@ -92,6 +117,9 @@ namespace view{
 		this->boggle->sortPlayersByScore();
 		fileio->savePlayers(this->boggle->Players->Players);
 		this->endGamePrompt->Visible = false;
+		this->panel1->Visible = true;
+		this->panel1->BringToFront();
+		this->getMissedWords();
 	}
 
 	Void BoggleForm::BoggleForm_Load(Object^  sender, EventArgs^  e) {
@@ -110,19 +138,6 @@ namespace view{
 		}
 	}
 
-	/// <summary>
-	/// Gets the missed words.
-	/// </summary>
-	System::Void BoggleForm::getMissedWords() {
-		array<String^, 2>^ board = getBoardArray();
-		this->boggleSolver = gcnew BoggleSolver(this->boggle->Dictionary, board);
-		for each (String^ word in this->boggleSolver->Words) {
-			Word^ currWord = gcnew Word(word);
-			if (!this->boggle->playersWords->Contains(currWord)) {
-				this->missedWords->Add(word);
-			}
-		}
-	}
 
 	array<String^, 2>^ BoggleForm::getBoardArray() {
 		array<String^, 2>^ board = gcnew array<String^, 2>(4, 4);
