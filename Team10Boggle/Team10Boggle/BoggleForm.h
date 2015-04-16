@@ -15,7 +15,7 @@ namespace view{
 	using namespace System::ComponentModel;
 	using namespace System::Collections;
 	using namespace System::Windows::Forms;
-	
+
 	using namespace System::Data;
 	using namespace System::Drawing;
 	using namespace System::Resources;
@@ -50,7 +50,7 @@ namespace view{
 	private: System::Windows::Forms::Button^  rotateButton;
 	private: System::Windows::Forms::Label^  label4;
 	private: System::Windows::Forms::Panel^  highScorePanel;
-	
+
 
 
 
@@ -112,6 +112,7 @@ namespace view{
 			 void addLetter(int row, int column);
 			 void changeCheckBoxLetter(int row, int column);
 			 void getMissedWords();
+			 array<String^, 2>^ getBoardArray();
 			 bool resizing;
 			 Boggle^ boggle;
 			 BoggleSolver^ boggleSolver;
@@ -167,28 +168,28 @@ namespace view{
 			 System::Void rotateButton_Click(System::Object^  sender, System::EventArgs^  e);
 
 	private: System::Void listBox1_DrawItem(System::Object^  sender, System::Windows::Forms::DrawItemEventArgs^  e) {
-		ListBox^ list = static_cast<ListBox^>(sender);
-		if (e->Index > -1)
-		{
-			Object^ item = list->Items[e->Index];
-			e->DrawBackground();
-			e->DrawFocusRectangle();
-			Brush^ brush = gcnew SolidBrush(e->ForeColor);
-			SizeF^ size = e->Graphics->MeasureString(item->ToString(), e->Font);
-			e->Graphics->DrawString(item->ToString(), e->Font, brush, e->Bounds.Left + (e->Bounds.Width / 2 - size->Width / 2), e->Bounds.Top + (e->Bounds.Height / 2 - size->Height / 2));
-		}
+				 ListBox^ list = static_cast<ListBox^>(sender);
+				 if (e->Index > -1)
+				 {
+					 Object^ item = list->Items[e->Index];
+					 e->DrawBackground();
+					 e->DrawFocusRectangle();
+					 Brush^ brush = gcnew SolidBrush(e->ForeColor);
+					 SizeF^ size = e->Graphics->MeasureString(item->ToString(), e->Font);
+					 e->Graphics->DrawString(item->ToString(), e->Font, brush, e->Bounds.Left + (e->Bounds.Width / 2 - size->Width / 2), e->Bounds.Top + (e->Bounds.Height / 2 - size->Height / 2));
+				 }
 	}
 	private: System::Void nameBox_TextChanged(System::Object^  sender, System::EventArgs^  e);
 
-private: System::Void submitNameButton_Click(System::Object^  sender, System::EventArgs^  e);
+	private: System::Void submitNameButton_Click(System::Object^  sender, System::EventArgs^  e);
 
-private: System::Void scoreBoard_SizeChanged(System::Object^  sender, System::EventArgs^  e);
-private: System::Void startGameButton_Click(System::Object^  sender, System::EventArgs^  e);
+	private: System::Void scoreBoard_SizeChanged(System::Object^  sender, System::EventArgs^  e);
+	private: System::Void startGameButton_Click(System::Object^  sender, System::EventArgs^  e);
 
-private: System::Void highscoresButton_Click(System::Object^  sender, System::EventArgs^  e);
+	private: System::Void highscoresButton_Click(System::Object^  sender, System::EventArgs^  e);
 
-private: System::Void mainMenuPanelReturnButton_Click(System::Object^  sender, System::EventArgs^  e);
+	private: System::Void mainMenuPanelReturnButton_Click(System::Object^  sender, System::EventArgs^  e);
 
-};
+	};
 
 }

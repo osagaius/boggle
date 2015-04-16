@@ -48,21 +48,21 @@ namespace view{
 	}
 
 	System::Void BoggleForm::scoreBoard_SizeChanged(System::Object^  sender, System::EventArgs^  e) {
-			ListView^ listView = static_cast<ListView^>(sender);
-			if (listView != nullptr)
-			{
-				float totalColumnWidth = 0;
-				int c = listView->Columns->Count;
+		ListView^ listView = static_cast<ListView^>(sender);
+		if (listView != nullptr)
+		{
+			float totalColumnWidth = 0;
+			int c = listView->Columns->Count;
 
-				for (int i = 0; i < listView->Columns->Count; i++){
-					totalColumnWidth += Convert::ToInt32(listView->Columns[i]->Tag);
-				}
-				for (int i = 0; i < listView->Columns->Count; i++)
-				{
-					float colPercentage = (Convert::ToInt32(listView->Columns[i]->Tag) / totalColumnWidth);
-					listView->Columns[i]->Width = (int)(colPercentage * listView->ClientRectangle.Width);
-				}
+			for (int i = 0; i < listView->Columns->Count; i++){
+				totalColumnWidth += Convert::ToInt32(listView->Columns[i]->Tag);
 			}
+			for (int i = 0; i < listView->Columns->Count; i++)
+			{
+				float colPercentage = (Convert::ToInt32(listView->Columns[i]->Tag) / totalColumnWidth);
+				listView->Columns[i]->Width = (int)(colPercentage * listView->ClientRectangle.Width);
+			}
+		}
 	}
 	System::Void BoggleForm::startGameButton_Click(System::Object^  sender, System::EventArgs^  e){
 		this->mainMenuPanel->Visible = false;
@@ -99,7 +99,7 @@ namespace view{
 		for each (Player^ player in this->boggle->Players->Players){
 			if (!this->nameBox->Items->Contains(player->Name)){
 				this->nameBox->Items->Add(player->Name);
-			}		
+			}
 		}
 		for (int i = 0; i < 4; i++){
 			for (int j = 0; j < 4; j++){
@@ -108,19 +108,30 @@ namespace view{
 				this->diceButtons[i, j]->AutoCheck = false;
 			}
 		}
-
-		this->getMissedWords();
 	}
 
+	/// <summary>
+	/// Gets the missed words.
+	/// </summary>
 	System::Void BoggleForm::getMissedWords() {
-		array<String^, 2>^ board = gcnew array<String^, 2>(4,4);
-		for (int i = 0; i < 4; i++){
-			for (int j = 0; j < 4; j++){
-				board[i,j] = this->diceButtons[i, j]->Text;
+		array<String^, 2>^ board = getBoardArray();
+		this->boggleSolver = gcnew BoggleSolver(this->boggle->Dictionary, board);
+		for each (String^ word in this->boggleSolver->Words) {
+			Word^ currWord = gcnew Word(word);
+			if (!this->boggle->playersWords->Contains(currWord)) {
+				this->missedWords->Add(word);
 			}
 		}
+	}
 
-		this->boggleSolver = gcnew BoggleSolver(this->boggle->Dictionary, board);
+	array<String^, 2>^ BoggleForm::getBoardArray() {
+		array<String^, 2>^ board = gcnew array<String^, 2>(4, 4);
+		for (int i = 0; i < 4; i++){
+			for (int j = 0; j < 4; j++){
+				board[i, j] = this->diceButtons[i, j]->Text;
+			}
+		}
+		return board;
 	}
 
 	System::Void BoggleForm::checkBox_Click(System::Object^ sender, System::EventArgs^  e){
@@ -202,9 +213,9 @@ namespace view{
 		}
 	}
 	void BoggleForm::addLetter(int row, int column){
-			this->letters->Add(this->diceButtons[row, 3 - column]->Text);
-		}
-	
+		this->letters->Add(this->diceButtons[row, 3 - column]->Text);
+	}
+
 	System::Void BoggleForm::addWordButton_Click(System::Object^  sender, System::EventArgs^  e){
 		Word^ word = gcnew Word(this->label4->Text);
 		if (this->boggle->isDefinedWord(word) && word->length > 2 && !this->boggle->playersWords->Contains(word)){
