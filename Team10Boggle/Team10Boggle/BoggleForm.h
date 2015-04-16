@@ -6,6 +6,7 @@
 #include "BoggleForm.h"
 #include "PlayerManager.h"
 #include "Player.h"
+
 delegate void IterateFunction(int, int);
 namespace view{
 	using namespace model;
@@ -14,6 +15,7 @@ namespace view{
 	using namespace System::ComponentModel;
 	using namespace System::Collections;
 	using namespace System::Windows::Forms;
+	
 	using namespace System::Data;
 	using namespace System::Drawing;
 	using namespace System::Resources;
@@ -48,7 +50,7 @@ namespace view{
 	private: System::Windows::Forms::Button^  rotateButton;
 	private: System::Windows::Forms::Label^  label4;
 	private: System::Windows::Forms::Panel^  highScorePanel;
-
+	
 
 
 
@@ -85,7 +87,6 @@ namespace view{
 
 
 			 ObservableCollection<String^>^ letters;
-
 			 int draggedOverBoxCount;
 			 CheckBox^ getCheckBox(int column, int row);
 			 bool clickedValidCheckedBox(CheckBox^ checkBox);
