@@ -29,12 +29,12 @@ namespace model
 	/// <param name="name">The name.</param>
 	/// <param name="score">The score.</param>
 	void PlayerManager::addPlayer(String^ name, int score){
-		if (playerExists(name)) {
-			updatePlayer(name, score);
-		}
-		else {
+		//if (playerExists(name)) {
+		//	updatePlayer(name, score);
+		//}
+		//else {
 			this->players->Add(gcnew Player(name, score));
-		}
+		//}
 	}
 
 	/// <summary>
@@ -43,21 +43,21 @@ namespace model
 	/// <param name="name">The name.</param>
 	/// <param name="newScore">The new score.</param>
 	void PlayerManager::updatePlayer(String^ name, int newScore){
-		for each (Player^ currPlayer in this->players)
-		{
-			if (currPlayer->Name->Equals(name)) {
-				currPlayer->Score = newScore;
-			}
-		}
+		//for each (Player^ currPlayer in this->players)
+		//{
+		//	if (currPlayer->Name->Equals(name)) {
+		//		currPlayer->Score = newScore;
+		//	}
+		//}
 	}
 
 	bool PlayerManager::playerExists(String^ name){
-		for each (Player^ currPlayer in this->players)
-		{
-			if (currPlayer->Name->Equals(name)) {
-				return true;
-			}
-		}
+		//for each (Player^ currPlayer in this->players)
+		//{
+		//	if (currPlayer->Name->Equals(name)) {
+		//		return true;
+		//	}
+		//}
 		return false;
 	}
 }

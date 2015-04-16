@@ -4,6 +4,7 @@
 #include "DieCollection.h"
 #include "BoggleForm.h"
 #include "PlayerManager.h"
+#include "Player.h"
 delegate void IterateFunction(int, int);
 namespace view{
 	using namespace model;
@@ -45,23 +46,45 @@ namespace view{
 
 	private: System::Windows::Forms::Button^  rotateButton;
 	private: System::Windows::Forms::Label^  label4;
-	private: System::Windows::Forms::Panel^  endGamePanel;
+	private: System::Windows::Forms::Panel^  highScorePanel;
+
+
+
+
+
+
+
+
+
+
+
 
 	private: System::Windows::Forms::Panel^  endGamePrompt;
-
+	private: System::Windows::Forms::ComboBox^  nameBox;
 	private: System::Windows::Forms::Button^  submitNameButton;
-
-
 	private: System::Windows::Forms::Label^  nameLabel;
 	private: System::Windows::Forms::Label^  timeUpLabel;
-	private: System::Windows::Forms::ComboBox^  nameBox;
+	private: System::Windows::Forms::Panel^  mainMenuPanel;
+
+	private: System::Windows::Forms::Button^  highscoresButton;
+	private: System::Windows::Forms::Button^  startGameButton;
+
+
+
+
+
+			 bool gameRunning;
+	private: System::Windows::Forms::ListView^  scoreBoard;
+	private: System::Windows::Forms::ColumnHeader^  col1;
+	private: System::Windows::Forms::ColumnHeader^  col2;
+	private: System::Windows::Forms::Button^  mainMenuPanelReturnButton;
 
 
 
 
 
 			 ObservableCollection<String^>^ letters;
-			 System::Void rotate_Letters(Object^, NotifyCollectionChangedEventArgs^ e);
+
 			 int draggedOverBoxCount;
 			 CheckBox^ getCheckBox(int column, int row);
 			 bool clickedValidCheckedBox(CheckBox^ checkBox);
@@ -86,6 +109,7 @@ namespace view{
 			 void iterate(IterateFunction^ func);
 			 void addLetter(int row, int column);
 			 void changeCheckBoxLetter(int row, int column);
+			 bool resizing;
 			 Boggle^ boggle;
 			 int second;
 			 int minute;
@@ -152,6 +176,13 @@ namespace view{
 	private: System::Void nameBox_TextChanged(System::Object^  sender, System::EventArgs^  e);
 
 private: System::Void submitNameButton_Click(System::Object^  sender, System::EventArgs^  e);
+
+private: System::Void scoreBoard_SizeChanged(System::Object^  sender, System::EventArgs^  e);
+private: System::Void startGameButton_Click(System::Object^  sender, System::EventArgs^  e);
+
+private: System::Void highscoresButton_Click(System::Object^  sender, System::EventArgs^  e);
+
+private: System::Void mainMenuPanelReturnButton_Click(System::Object^  sender, System::EventArgs^  e);
 
 };
 

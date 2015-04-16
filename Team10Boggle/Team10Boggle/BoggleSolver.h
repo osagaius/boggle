@@ -19,7 +19,7 @@ namespace model
 	{
 	public:
 		BoggleSolver();
-		void solveBoard(array<String^, 2>^ board, array<boolean, 2>^ tracker, Trie^ lexicon, String^ word, int x, int y, List<String^>^ result);
+		void generateWords(Trie^ dictionary, array<String^, 2>^ board);
 
 		property List<String^>^ Words
 		{
@@ -31,6 +31,7 @@ namespace model
 		List<String^>^ words;
 		Trie^ dictionary;
 		bool isDefinedWord(String^ word);
+		void solveBoard(array<String^, 2>^ board, array<boolean, 2>^ tracker, Trie^ lexicon, String^ word, int x, int y, List<String^>^ result);
 	};
 
 }

@@ -2,15 +2,13 @@
 #include "DieCollection.h"
 #include "Boggle.h"
 #include "Word.h"
-#include <vector>
 #include "FileIO.h"
-#include "PlayerManager.h"
 #include <mmsystem.h>
 #include <Windows.h>
 #pragma comment(lib, "winmm.lib")
+using namespace model;
 using namespace System::Windows::Input;
 using namespace std;
-using namespace model;
 using namespace fileio;
 using namespace System::Threading;
 using namespace System::Resources;
@@ -34,8 +32,9 @@ namespace view{
 		this->letters = gcnew ObservableCollection<String^>();
 		this->rotateButton->GotFocus += gcnew EventHandler(this, &BoggleForm::button_GotFocus);
 		this->addWordButton->GotFocus += gcnew EventHandler(this, &BoggleForm::button_GotFocus);
-		this->letters->CollectionChanged += gcnew NotifyCollectionChangedEventHandler(this, &BoggleForm::rotate_Letters);
-		
+		this->resizing = false;
+		this->gameRunning = false;
+		this->mainMenuPanel->BringToFront();
 	}
 	System::Void BoggleForm::nameBox_TextChanged(System::Object^  sender, System::EventArgs^  e){
 		if (this->nameBox->Text == String::Empty){
@@ -45,13 +44,46 @@ namespace view{
 			this->submitNameButton->Enabled = true;
 		}
 	}
-	Void BoggleForm::rotate_Letters(Object^  sender, NotifyCollectionChangedEventArgs^ e){
-		if (e->Action == NotifyCollectionChangedAction::Reset){
-			this->iterate(gcnew IterateFunction(this, &BoggleForm::addLetter));
-			this->iterate(gcnew IterateFunction(this, &BoggleForm::changeCheckBoxLetter));
-		}
+
+	System::Void BoggleForm::scoreBoard_SizeChanged(System::Object^  sender, System::EventArgs^  e) {
+			ListView^ listView = static_cast<ListView^>(sender);
+			if (listView != nullptr)
+			{
+				float totalColumnWidth = 0;
+				int c = listView->Columns->Count;
+
+				for (int i = 0; i < listView->Columns->Count; i++){
+					totalColumnWidth += Convert::ToInt32(listView->Columns[i]->Tag);
+				}
+				for (int i = 0; i < listView->Columns->Count; i++)
+				{
+					float colPercentage = (Convert::ToInt32(listView->Columns[i]->Tag) / totalColumnWidth);
+					listView->Columns[i]->Width = (int)(colPercentage * listView->ClientRectangle.Width);
+				}
+			}
+	}
+	System::Void BoggleForm::startGameButton_Click(System::Object^  sender, System::EventArgs^  e){
+		this->mainMenuPanel->Visible = false;
+		this->gameRunning = true;
 	}
 
+	System::Void BoggleForm::highscoresButton_Click(System::Object^  sender, System::EventArgs^  e){
+		this->mainMenuPanel->Visible = false;
+		this->highScorePanel->Visible = true;
+		this->highScorePanel->BringToFront();
+
+		for (int i = 0; i < 10 && i < this->boggle->Players->Players->Count; i++){
+			ListViewItem^ item = gcnew ListViewItem(gcnew array < String^ > {this->boggle->Players->Players[i]->Name, this->boggle->Players->Players[i]->Score.ToString()});
+			this->scoreBoard->Items->Add(item);
+		}
+
+	}
+
+	System::Void BoggleForm::mainMenuPanelReturnButton_Click(System::Object^  sender, System::EventArgs^  e){
+		this->highScorePanel->Visible = false;
+		this->highScorePanel->SendToBack();
+		this->mainMenuPanel->Visible = true;
+	}
 	System::Void BoggleForm::submitNameButton_Click(System::Object^  sender, System::EventArgs^  e){
 		this->boggle->Players->addPlayer(this->nameBox->Text, this->boggle->PlayerScore);
 		FileIO^ fileio = gcnew FileIO();
@@ -63,7 +95,9 @@ namespace view{
 	Void BoggleForm::BoggleForm_Load(Object^  sender, EventArgs^  e) {
 		DieCollection^ dice = gcnew DieCollection();
 		for each (Player^ player in this->boggle->Players->Players){
-			this->nameBox->Items->Add(player->Name);
+			if (!this->nameBox->Items->Contains(player->Name)){
+				this->nameBox->Items->Add(player->Name);
+			}		
 		}
 		for (int i = 0; i < 4; i++){
 			for (int j = 0; j < 4; j++){
@@ -135,8 +169,8 @@ namespace view{
 		}
 	}
 	System::Void BoggleForm::rotateButton_Click(System::Object^  sender, System::EventArgs^  e){
-		this->rotate_Letters(sender, gcnew NotifyCollectionChangedEventArgs(
-										   NotifyCollectionChangedAction::Reset));
+		this->iterate(gcnew IterateFunction(this, &BoggleForm::addLetter));
+		this->iterate(gcnew IterateFunction(this, &BoggleForm::changeCheckBoxLetter));
 	}
 
 	void BoggleForm::changeCheckBoxLetter(int row, int column){
@@ -179,29 +213,34 @@ namespace view{
 	}
 
 	System::Void BoggleForm::timer1_Tick(System::Object^  sender, System::EventArgs^  e) {
-		this->second--;
+		if (this->gameRunning){
 
-		this->secondString = Convert::ToString(second);
-		this->minuteString = Convert::ToString(minute);
+			this->second--;
 
-		if (this->second < 10 && this->second != 0){
-			this->label3->Text = minuteString + ":0" + secondString;
-		}
-		else if (this->second == 0 && this->minute != 0){
-			this->label3->Text = minuteString + ":00";
-			this->second = 60;
-			minute--;
-		}
-		else if (minute == 0 && second == 0){
-			this->label3->Text = "0:00";
-			this->timer1->Stop();
-			this->endGamePanel->Visible = true;
-			this->endGamePanel->BringToFront();
-		}
-		else {
-			this->label3->Text = minuteString + ":" + secondString;
-		}
+			this->secondString = Convert::ToString(second);
+			this->minuteString = Convert::ToString(minute);
 
+			if (this->second < 10 && this->second != 0){
+				this->label3->Text = minuteString + ":0" + secondString;
+			}
+			else if (this->second == 0 && this->minute != 0){
+				this->label3->Text = minuteString + ":00";
+				this->second = 60;
+				minute--;
+			}
+			else if (minute == 0 && second == 0){
+				this->label3->Text = "0:00";
+				this->timer1->Stop();
+				this->endGamePrompt->Visible = true;
+				this->endGamePrompt->BringToFront();
+				this->checkBoxContainer->Enabled = false;
+				this->addWordButton->Enabled = false;
+				this->rotateButton->Enabled = false;
+			}
+			else {
+				this->label3->Text = minuteString + ":" + secondString;
+			}
+		}
 	}
 
 	bool BoggleForm::clickedValidCheckedBox(CheckBox^ checkBox){

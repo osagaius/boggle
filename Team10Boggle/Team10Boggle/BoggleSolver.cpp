@@ -14,6 +14,16 @@ namespace model
 
 	}
 
+	void BoggleSolver::generateWords(Trie^ lexicon, array<String^, 2>^ board) {
+		List<String^>^  result = gcnew List<String^>();
+		for (int i = 0; i < board->Length; i++) {
+			for (int j = 0; j < board->GetLength(0); j++) {
+				array<boolean, 2>^ tracker = gcnew array<boolean, 2>(board->Length, board->GetLength(0));
+				solveBoard(board, tracker, lexicon, board[i,j] + "", i, j, result);
+			}
+		}
+		this->words = result;
+	}
 	void BoggleSolver::solveBoard(array<String^, 2>^ board, array<boolean, 2>^ tracker, Trie^ lexicon, String^ word, int x, int y, List<String^>^ result) {
 		if (lexicon->searchWord(word)) { result->Add(word); }
 		//check if the word is a valid prefix
@@ -62,7 +72,6 @@ namespace model
 		if (0 <= x - 1 && !tmp[x - 1, y]){
 			solveBoard(board, tmp, lexicon, word + board[x - 1, y], x - 1, y, result);
 		}
-		this->words = result;
 	}
 
 	bool BoggleSolver::isDefinedWord(String^ word){
