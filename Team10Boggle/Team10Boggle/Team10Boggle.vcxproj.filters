@@ -69,6 +69,9 @@
     <ClCompile Include="PlayerManager.cpp">
       <Filter>Source Files\Model</Filter>
     </ClCompile>
+    <ClCompile Include="BoggleSolver.cpp">
+      <Filter>Source Files\Model</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BoggleForm.h">
@@ -99,6 +102,9 @@
       <Filter>Model</Filter>
     </ClInclude>
     <ClInclude Include="PlayerManager.h">
+      <Filter>Model</Filter>
+    </ClInclude>
+    <ClInclude Include="BoggleSolver.h">
       <Filter>Model</Filter>
     </ClInclude>
   </ItemGroup>
