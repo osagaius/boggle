@@ -8,82 +8,76 @@ namespace model
 {
 	BoggleSolver::BoggleSolver(Trie^ lexicon, array<String^, 2>^ board)
 	{
-		FileIO^ fileio = gcnew FileIO();
+		this->allWords = gcnew List<String^>();
+		this->validWords = gcnew List<String^>();
+		items = gcnew List<Vertex^>(16);
+
 		this->generateWords(lexicon, board);
-		this->words = gcnew List<String^>();
 	}
 
 	/// <summary>
-	/// Generates the words.
+	/// Generates the valid words.
 	/// </summary>
 	/// <param name="lexicon">The lexicon.</param>
 	/// <param name="board">The board.</param>
 	void BoggleSolver::generateWords(Trie^ lexicon, array<String^, 2>^ board) {
-		List<String^>^  result = gcnew List<String^>();
+
+		array<Vertex^, 2>^ boardg = this->getBoard(board);
+
 		for (int i = 0; i < 4; i++) {
 			for (int j = 0; j < 4; j++) {
-				array<boolean, 2>^ tracker = gcnew array<boolean, 2>(4, 4);
-				solveBoard(board, tracker, lexicon, board[i,j] + "", i, j, result);
+				if (i > 0)
+					boardg[i, j]->addNeighbor(boardg[i - 1, j]);
+				if (i < 4 - 1)
+					boardg[i,j]->addNeighbor(boardg[i + 1,j]);
+				if (j > 0)
+					boardg[i,j]->addNeighbor(boardg[i,j - 1]);
+				if (j < 4 - 1)
+					boardg[i,j]->addNeighbor(boardg[i,j + 1]);
 			}
 		}
-		this->words = result;
+
+		this->generateAllWords();
+		this->setValidWords(lexicon);
 	}
 
-	void BoggleSolver::solveBoard(array<String^, 2>^ board, array<boolean, 2>^ tracker, Trie^ lexicon, String^ word, int x, int y, List<String^>^ result) {
-		if (lexicon->searchWord(word))
-		{
-			result->Add(word);
+	void BoggleSolver::setValidWords(Trie^ lexicon) {
+		for each (String^ currWord in this->allWords){
+			if (lexicon->searchWord(currWord)) {
+				this->validWords->Add(currWord);
+			}
 		}
+	}
 
-		if (!lexicon->isPrefix(word))
-		{
-			return;
+	array<Vertex^, 2>^ BoggleSolver::getBoard(array<String^, 2>^ board) {
+		array<Vertex^, 2>^ boardg = gcnew array<Vertex^, 2>(4, 4);
+		for (int i = 0; i < 4; i++) {
+			for (int j = 0; j < 4; j++) {
+				boardg[i, j] = gcnew Vertex(board[i, j]);
+				this->items->Add(boardg[i, j]);
+			}
 		}
+		return boardg;
+	}
 
-		array<boolean, 2>^ tmp = gcnew array<boolean, 2>(4, 4);
-		Array::Copy(tracker, 0, tmp, 0, tracker->Length);
-
-		tmp[x, y] = true;
-
-		//upper left
-		if (0 <= x - 1 && 0 <= y - 1 && !tmp[x - 1, y - 1]){
-			solveBoard(board, tmp, lexicon, word + board[x - 1, y - 1], x - 1, y - 1, result);
+	void BoggleSolver::generateAllWords() {
+		for each (Vertex^ vert in this->items){
+			this->depthFirstSearch(vert, "");
 		}
+	}
 
-		//up
-		if (0 <= y - 1 && !tmp[x, y - 1]){
-			solveBoard(board, tmp, lexicon, word + board[x, y - 1], x, y - 1, result);
+	void BoggleSolver::depthFirstSearch(Vertex^ vertex, String^ currentWord){
+		String^ currentLetter = vertex->visit();
+		currentWord = currentWord + currentLetter;
+		this->allWords->Add(currentWord);
+		vertex->Visited = true;
+		List<Vertex^>^ vertices = vertex->getVertices();
+		for each (Vertex^ v in vertices){
+			if (v->Visited != true){
+				depthFirstSearch(v, currentWord);
+			}
 		}
-
-		//upper right
-		if (x + 1 < board->Length && 0 <= y - 1 && !tmp[x + 1, y - 1]){
-			solveBoard(board, tmp, lexicon, word + board[x + 1, y - 1], x + 1, y - 1, result);
-		}
-
-		//right
-		if (x + 1 < board->Length && !tmp[x + 1, y]){
-			solveBoard(board, tmp, lexicon, word + board[x + 1, y], x + 1, y, result);
-		}
-
-		//lower right
-		if ((x + 1) < board->Length && y + 1 < board->GetLength(0) && !tmp[x + 1, y + 1]){
-			solveBoard(board, tmp, lexicon, word + board[x + 1, y + 1], x + 1, y + 1, result);
-		}
-
-		//down
-		if (y + 1 < board->GetLength(0) && !tmp[x, y + 1]){
-			solveBoard(board, tmp, lexicon, word + board[x, y + 1], x, y + 1, result);
-		}
-
-		//lower left
-		if (0 <= x - 1 && y + 1 < board->GetLength(0) && !tmp[x - 1, y + 1]){
-			solveBoard(board, tmp, lexicon, word + board[x - 1, y + 1], x - 1, y + 1, result);
-		}
-
-		//left
-		if (0 <= x - 1 && !tmp[x - 1, y]){
-			solveBoard(board, tmp, lexicon, word + board[x - 1, y], x - 1, y, result);
-		}
+		vertex->Visited = false;
 	}
 
 }

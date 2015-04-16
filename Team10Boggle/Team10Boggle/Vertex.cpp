@@ -9,6 +9,7 @@ namespace model
 	/// <param name="item">The item.</param>
 	Vertex::Vertex(String^ item) {
 		this->neighbors = gcnew List<Vertex^>();
+		this->item = item;
 	}
 	/// <summary>
 	/// Gets the vertices.
@@ -17,13 +18,7 @@ namespace model
 	List<Vertex^>^ Vertex::getVertices() {
 		return this->neighbors;
 	}
-	/// <summary>
-	/// Determines whether this instance is visited.
-	/// </summary>
-	/// <returns></returns>
-	bool Vertex::isVisited() {
-		return this->visited;
-	}
+
 	/// <summary>
 	/// Visits this instance.
 	/// </summary>

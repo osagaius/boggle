@@ -8,6 +8,7 @@
 #pragma comment(lib, "winmm.lib")
 using namespace model;
 using namespace System::Windows::Input;
+using namespace System::IO;
 using namespace std;
 using namespace fileio;
 using namespace System::Threading;
