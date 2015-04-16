@@ -163,6 +163,7 @@
     <ClCompile Include="BoggleController.cpp" />
     <ClCompile Include="BoggleForm.cpp" />
     <ClCompile Include="BoggleFormDesigner.cpp" />
+    <ClCompile Include="BoggleSolver.cpp" />
     <ClCompile Include="Die.cpp" />
     <ClCompile Include="DieCollection.cpp" />
     <ClCompile Include="Driver.cpp" />
@@ -179,6 +180,7 @@
     <ClInclude Include="BoggleForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>
+    <ClInclude Include="BoggleSolver.h" />
     <ClInclude Include="Die.h" />
     <ClInclude Include="DieCollection.h" />
     <ClInclude Include="FileIO.h" />
