@@ -6,29 +6,41 @@ using namespace System;
 
 namespace model
 {
-	BoggleSolver::BoggleSolver()
+	BoggleSolver::BoggleSolver(Trie^ lexicon, array<String^, 2>^ board)
 	{
 		FileIO^ fileio = gcnew FileIO();
+		this->generateWords(lexicon, board);
 		this->words = gcnew List<String^>();
-		this->dictionary = fileio->loadDictionary();
-
 	}
 
+	/// <summary>
+	/// Generates the words.
+	/// </summary>
+	/// <param name="lexicon">The lexicon.</param>
+	/// <param name="board">The board.</param>
 	void BoggleSolver::generateWords(Trie^ lexicon, array<String^, 2>^ board) {
 		List<String^>^  result = gcnew List<String^>();
-		for (int i = 0; i < board->Length; i++) {
-			for (int j = 0; j < board->GetLength(0); j++) {
-				array<boolean, 2>^ tracker = gcnew array<boolean, 2>(board->Length, board->GetLength(0));
+		for (int i = 0; i < 4; i++) {
+			for (int j = 0; j < 4; j++) {
+				array<boolean, 2>^ tracker = gcnew array<boolean, 2>(4, 4);
 				solveBoard(board, tracker, lexicon, board[i,j] + "", i, j, result);
 			}
 		}
 		this->words = result;
 	}
+
 	void BoggleSolver::solveBoard(array<String^, 2>^ board, array<boolean, 2>^ tracker, Trie^ lexicon, String^ word, int x, int y, List<String^>^ result) {
-		if (lexicon->searchWord(word)) { result->Add(word); }
-		//check if the word is a valid prefix
-	
-		array<boolean, 2>^ tmp;
+		if (lexicon->searchWord(word))
+		{
+			result->Add(word);
+		}
+
+		if (!lexicon->isPrefix(word))
+		{
+			return;
+		}
+
+		array<boolean, 2>^ tmp = gcnew array<boolean, 2>(4, 4);
 		Array::Copy(tracker, 0, tmp, 0, tracker->Length);
 
 		tmp[x, y] = true;
@@ -74,7 +86,4 @@ namespace model
 		}
 	}
 
-	bool BoggleSolver::isDefinedWord(String^ word){
-		return this->dictionary->searchWord(word);
-	}
 }

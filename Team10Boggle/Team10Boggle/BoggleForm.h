@@ -1,5 +1,6 @@
 #pragma once
 #include "Boggle.h"
+#include "BoggleSolver.h"
 #include "Die.h"
 #include "DieCollection.h"
 #include "BoggleForm.h"
@@ -109,8 +110,11 @@ namespace view{
 			 void iterate(IterateFunction^ func);
 			 void addLetter(int row, int column);
 			 void changeCheckBoxLetter(int row, int column);
+			 void getMissedWords();
 			 bool resizing;
 			 Boggle^ boggle;
+			 BoggleSolver^ boggleSolver;
+			 List<String^>^ missedWords;
 			 int second;
 			 int minute;
 			 CheckBox^ lastBoxChecked;

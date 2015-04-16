@@ -3,6 +3,8 @@
 using namespace System;
 using namespace System::Configuration;
 using namespace System::Diagnostics;
+using namespace System::Runtime::InteropServices;
+
 
 
 
@@ -65,5 +67,21 @@ namespace model{
 			}
 		}
 		return false;
+	}
+
+	bool Trie::isPrefix(String^ word){
+
+		Node^ current = this->root;
+
+		for (int i = 0; i < word->Length; i++){
+			Node^ tmp = current->getChild(word[i]);
+
+			if (tmp == nullptr){
+				return false;
+			}
+			current = tmp;
+		}
+
+		return (!current->marker);
 	}
 }

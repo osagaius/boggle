@@ -12,6 +12,7 @@ namespace model{
 		Trie();
 		void addWord(String^ word);
 		bool searchWord(String^ word);
+		bool isPrefix(String^ word);
 	private:
 		Node^ root;
 	};

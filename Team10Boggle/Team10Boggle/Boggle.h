@@ -28,6 +28,10 @@ namespace model{
 			void set(BindingList<Word^>^ listOfWords){ this->submittedWords = listOfWords; }
 		}
 
+		property Trie^ Dictionary{
+			Trie^ get(){ return this->dictionary; }
+		}
+
 		property int PlayerScore{
 			int get(){ return this->score; }
 			void set(int value){ this->score = value; OnPropertyChanged("PlayerScore"); }

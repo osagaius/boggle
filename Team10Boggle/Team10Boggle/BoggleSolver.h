@@ -1,5 +1,4 @@
 #pragma once
-#pragma once
 #include <windows.h>
 #using <System.dll>
 #using <System.Drawing.dll>
@@ -18,7 +17,7 @@ namespace model
 	ref class BoggleSolver
 	{
 	public:
-		BoggleSolver();
+		BoggleSolver(Trie^ lexicon, array<String^, 2>^ board);
 		void generateWords(Trie^ dictionary, array<String^, 2>^ board);
 
 		property List<String^>^ Words
@@ -29,8 +28,6 @@ namespace model
 
 	private:
 		List<String^>^ words;
-		Trie^ dictionary;
-		bool isDefinedWord(String^ word);
 		void solveBoard(array<String^, 2>^ board, array<boolean, 2>^ tracker, Trie^ lexicon, String^ word, int x, int y, List<String^>^ result);
 	};
 

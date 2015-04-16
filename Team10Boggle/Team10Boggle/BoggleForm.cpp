@@ -17,6 +17,7 @@ namespace view{
 	BoggleForm::BoggleForm(){
 		this->InitializeComponent();
 		this->boggle = gcnew Boggle();
+		this->missedWords = gcnew List<String^>();
 		this->listBox1->DataSource = this->boggle->playersWords;
 		this->label2->DataBindings->Add(gcnew Binding("Text", this->boggle, "PlayerScore"));
 		this->second = 60;
@@ -106,8 +107,20 @@ namespace view{
 				this->diceButtons[i, j]->AutoCheck = false;
 			}
 		}
+
+		this->getMissedWords();
 	}
 
+	System::Void BoggleForm::getMissedWords() {
+		array<String^, 2>^ board = gcnew array<String^, 2>(4,4);
+		for (int i = 0; i < 4; i++){
+			for (int j = 0; j < 4; j++){
+				board[i,j] = this->diceButtons[i, j]->Text;
+			}
+		}
+
+		this->boggleSolver = gcnew BoggleSolver(this->boggle->Dictionary, board);
+	}
 
 	System::Void BoggleForm::checkBox_Click(System::Object^ sender, System::EventArgs^  e){
 		CheckBox^ checkBox = static_cast<CheckBox^>(sender);
