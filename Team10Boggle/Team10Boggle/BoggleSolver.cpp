@@ -20,7 +20,7 @@ namespace model
 	BoggleSolver::BoggleSolver(Trie^ trie, array<String^, 2>^ board)
 	{
 		this->allWords = gcnew List<String^>();
-		this->validWords = gcnew List<String^>();
+		this->validWords = gcnew BindingList<Word^>();
 		items = gcnew List<Vertex^>(16);
 		this->lexicon = trie;
 		this->generateWords(board);
@@ -75,8 +75,9 @@ namespace model
 	/// <param name="lexicon">The lexicon.</param>
 	void BoggleSolver::setValidWords() {
 		for each (String^ currWord in this->allWords){
-			if (lexicon->searchWord(currWord) && !validWords->Contains(currWord)) {
-				this->validWords->Add(currWord);
+			Word^ word = gcnew Word(currWord);
+			if (lexicon->searchWord(currWord) && !validWords->Contains(word)) {
+				this->validWords->Add(word);
 			}
 		}
 	}

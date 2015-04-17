@@ -10,11 +10,14 @@ namespace model{
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Boggle"/> class.
 	/// </summary>
-	Boggle::Boggle()
+	Boggle::Boggle(array<String^, 2>^ board)
 	{
 		FileIO^ fileio = gcnew FileIO();
 		this->score = 0;
+		this->board = board;
 		this->dictionary = fileio->loadDictionary();
+		this->boggleSolver = gcnew BoggleSolver(this->Dictionary, board);
+		this->allPossibleWords = this->boggleSolver->Words;
 		this->submittedWords = gcnew BindingList<Word^>();
 		this->playerManager = gcnew PlayerManager();
 		this->playerManager->Players = fileio->loadPlayers();

@@ -26,14 +26,14 @@ namespace model
 		BoggleSolver(Trie^ trie, array<String^, 2>^ board);
 		void generateWords(array<String^, 2>^ board);
 
-		property List<String^>^ Words
+		property BindingList<Word^>^ Words
 		{
-			List<String^>^ get(){ return this->validWords; };
+			BindingList<Word^>^ get(){ return this->validWords; };
 		}
 
 	private:
 		List<String^>^ allWords;
-		List<String^>^ validWords;
+		BindingList<Word^>^ validWords;
 		List<Vertex^>^ items;
 		Trie^ lexicon;
 		void depthFirstSearch(Vertex^ vertex, String^ currentWord);

@@ -46,170 +46,67 @@ namespace view{
 		}
 
 	private: PlayerManager^ playerManager;
-
-	private: System::Windows::Forms::Button^  rotateButton;
-	private: System::Windows::Forms::Label^  label4;
-	private: System::Windows::Forms::Panel^  highScorePanel;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	private: System::Windows::Forms::Panel^  mainMenuPanel;
-
-	private: System::Windows::Forms::Button^  highscoresButton;
-	private: System::Windows::Forms::Button^  startGameButton;
-
-
-
-
-
+			 ResourceManager^ resourceManager;
+			 void addNeighborsInColumnBefore(int row, int column, Row neighboringRow);
+			 void addNeighborsInColumnAfter(int row, int column, Row neighboringRow);
+			 void initializeGameInterface();
+			 void initializeStringResources();
+			 void generateCheckBoxLetter(int col, int row);
+			 void showMainMenu();
+			 void showGamePanel();
+			 void showHighscorePanel();
+			 void showEndGamePanel();
+			 void endGame();
+			 void changeTimerMinute();
+			 DieCollection^ dice;
+			 System::Windows::Forms::Button^  rotateButton;
+			 System::Windows::Forms::Label^  label4;
+			 System::Windows::Forms::Panel^  highScorePanel;
+			 System::Windows::Forms::Panel^  mainMenuPanel;
+			 System::Windows::Forms::Button^  highscoresButton;
+			 System::Windows::Forms::Button^  startGameButton;
 			 bool gameRunning;
-	private: System::Windows::Forms::ListView^  scoreBoard;
-	private: System::Windows::Forms::ColumnHeader^  col1;
-	private: System::Windows::Forms::ColumnHeader^  col2;
-
-
-
-
-
-
+			 System::Windows::Forms::ListView^  scoreBoard;
+			 System::Windows::Forms::ColumnHeader^  col1;
+			 System::Windows::Forms::ColumnHeader^  col2;
 			 ObservableCollection<String^>^ letters;
-
-	private: System::Windows::Forms::MenuStrip^  menuStrip1;
-	private: System::Windows::Forms::Panel^  endGamePanel;
-
-	private: System::Windows::Forms::ListBox^  allPossibleWordBox;
-	private: System::Windows::Forms::Panel^  gamePanel;
-	private: System::Windows::Forms::Label^  label5;
-
-
-
-
-
-	private: System::Windows::Forms::Button^  addWordButton;
-	private: System::Windows::Forms::Panel^  endGamePrompt;
-	private: System::Windows::Forms::ComboBox^  nameBox;
-	private: System::Windows::Forms::Button^  submitNameButton;
-	private: System::Windows::Forms::Label^  nameLabel;
-	private: System::Windows::Forms::Label^  timeUpLabel;
-	private: System::Windows::Forms::Button^  mainMenuPanelReturnButton;
-	private: System::Windows::Forms::TabControl^  endGameWordTabs;
-	private: System::Windows::Forms::TabPage^  allWordsTab;
-	private: System::Windows::Forms::TabPage^  playerWordsTab;
-
-
-
-
-	private: System::Windows::Forms::ListBox^  userSubmittedWordBox;
-	private: System::Windows::Forms::TableLayoutPanel^  checkBoxContainer;
-	private: System::Windows::Forms::CheckBox^  checkBox17;
-	private: System::Windows::Forms::CheckBox^  checkBox16;
-	private: System::Windows::Forms::CheckBox^  checkBox15;
-	private: System::Windows::Forms::CheckBox^  checkBox14;
-	private: System::Windows::Forms::CheckBox^  checkBox13;
-	private: System::Windows::Forms::CheckBox^  checkBox12;
-	private: System::Windows::Forms::CheckBox^  checkBox11;
-	private: System::Windows::Forms::CheckBox^  checkBox10;
-	private: System::Windows::Forms::CheckBox^  checkBox9;
-	private: System::Windows::Forms::CheckBox^  checkBox8;
-	private: System::Windows::Forms::CheckBox^  checkBox7;
-	private: System::Windows::Forms::CheckBox^  checkBox6;
-	private: System::Windows::Forms::CheckBox^  checkBox5;
-	private: System::Windows::Forms::CheckBox^  checkBox4;
-	private: System::Windows::Forms::CheckBox^  checkBox3;
-	private: System::Windows::Forms::CheckBox^  checkBox2;
-private: System::Windows::Forms::Label^  endScoreLabel;
-private: System::Windows::Forms::Label^  finalScoreLabel;
-private: System::Windows::Forms::Button^  newGameButton;
-private: System::Windows::Forms::Button^  mainMenuButton2;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+			 System::Windows::Forms::MenuStrip^  menuStrip1;
+			 System::Windows::Forms::Panel^  endGamePanel;
+			 System::Windows::Forms::ListBox^  allPossibleWordBox;
+			 System::Windows::Forms::Panel^  gamePanel;
+			 System::Windows::Forms::Label^  boggleTitle;
+			 System::Windows::Forms::Button^  addWordButton;
+			 System::Windows::Forms::Panel^  endGamePrompt;
+			 System::Windows::Forms::ComboBox^  nameBox;
+			 System::Windows::Forms::Button^  submitNameButton;
+			 System::Windows::Forms::Label^  nameLabel;
+			 System::Windows::Forms::Label^  timeUpLabel;
+			 System::Windows::Forms::Button^  mainMenuPanelReturnButton;
+			 System::Windows::Forms::TabControl^  endGameWordTabs;
+			 System::Windows::Forms::TabPage^  allWordsTab;
+			 System::Windows::Forms::TabPage^  playerWordsTab;
+			 System::Windows::Forms::ListBox^  userSubmittedWordBox;
+			 System::Windows::Forms::TableLayoutPanel^  checkBoxContainer;
+			 System::Windows::Forms::CheckBox^  checkBox17;
+			 System::Windows::Forms::CheckBox^  checkBox16;
+			 System::Windows::Forms::CheckBox^  checkBox15;
+			 System::Windows::Forms::CheckBox^  checkBox14;
+			 System::Windows::Forms::CheckBox^  checkBox13;
+			 System::Windows::Forms::CheckBox^  checkBox12;
+			 System::Windows::Forms::CheckBox^  checkBox11;
+			 System::Windows::Forms::CheckBox^  checkBox10;
+			 System::Windows::Forms::CheckBox^  checkBox9;
+			 System::Windows::Forms::CheckBox^  checkBox8;
+			 System::Windows::Forms::CheckBox^  checkBox7;
+			 System::Windows::Forms::CheckBox^  checkBox6;
+			 System::Windows::Forms::CheckBox^  checkBox5;
+			 System::Windows::Forms::CheckBox^  checkBox4;
+			 System::Windows::Forms::CheckBox^  checkBox3;
+			 System::Windows::Forms::CheckBox^  checkBox2;
+			 System::Windows::Forms::Label^  endScoreLabel;
+			 System::Windows::Forms::Label^  finalScoreLabel;
+			 System::Windows::Forms::Button^  newGameButton;
+			 System::Windows::Forms::Button^  mainMenuButton2;
 			 int draggedOverBoxCount;
 			 CheckBox^ getCheckBox(int column, int row);
 			 bool clickedValidCheckedBox(CheckBox^ checkBox);
@@ -217,7 +114,6 @@ private: System::Windows::Forms::Button^  mainMenuButton2;
 			 bool mouseDown;
 			 bool clickedValidUncheckedBox(CheckBox^ checkBox);
 			 void handleChangedCheckState(CheckState checkState, CheckBox^ checkButton);
-			 void updateCheckedBoxesList();
 			 void updateLastBoxChecked();
 			 void removeEntry(CheckBox^ checkBox);
 			 void refresh();
@@ -234,7 +130,7 @@ private: System::Windows::Forms::Button^  mainMenuButton2;
 			 void iterate(IterateFunction^ func);
 			 void addLetter(int row, int column);
 			 void changeCheckBoxLetter(int row, int column);
-			 void getMissedWords();
+			 void loadNameBoxPlayers();
 			 array<String^, 2>^ getBoardArray();
 			 bool resizing;
 			 Boggle^ boggle;
@@ -249,36 +145,14 @@ private: System::Windows::Forms::Button^  mainMenuButton2;
 			 array<CheckBox^, 2>^ diceButtons;
 			 List<CheckBox^>^ checkedBoxes;
 			 List<CheckBox^>^ currentNeighbors;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-			 System::Windows::Forms::ListBox^  listBox1;
-
+			 System::Windows::Forms::ListBox^  playerWordBank;
 			 IterateFunction^ addLetters;
-
-			 System::Windows::Forms::Label^  label1;
+			 System::Windows::Forms::Label^  gamePanelScoreLabel;
 			 System::Windows::Forms::Label^  label2;
 			 System::Windows::Forms::Timer^  timer1;
 			 System::Windows::Forms::Label^  label3;
 			 System::Windows::Forms::ColumnHeader^  columnHeader1;
 			 System::ComponentModel::IContainer^  components;
-			 System::Void BoggleForm_Load(System::Object^  sender, System::EventArgs^  e);
 			 System::Void checkBox_Click(System::Object^  sender, System::EventArgs^  e);
 			 System::Void checkBox_CheckStateChanged(System::Object^  sender, System::EventArgs^  e);
 			 System::Void addWordButton_Click(System::Object^  sender, System::EventArgs^  e);
@@ -289,19 +163,13 @@ private: System::Windows::Forms::Button^  mainMenuButton2;
 			 System::Void checkBox_MouseHover(System::Object^  sender, System::EventArgs^  e);
 			 System::Void button_GotFocus(System::Object^  sender, System::EventArgs^  e);
 			 System::Void rotateButton_Click(System::Object^  sender, System::EventArgs^  e);
-
-	private: System::Void nameBox_TextChanged(System::Object^  sender, System::EventArgs^  e);
-
-	private: System::Void submitNameButton_Click(System::Object^  sender, System::EventArgs^  e);
-
-	private: System::Void scoreBoard_SizeChanged(System::Object^  sender, System::EventArgs^  e);
-	private: System::Void startGameButton_Click(System::Object^  sender, System::EventArgs^  e);
-
-	private: System::Void highscoresButton_Click(System::Object^  sender, System::EventArgs^  e);
-
-	private: System::Void mainMenuPanelReturnButton_Click(System::Object^  sender, System::EventArgs^  e);
-
-	private: System::Void newGameButton_Click(System::Object^  sender, System::EventArgs^  e);
+			 System::Void nameBox_TextChanged(System::Object^  sender, System::EventArgs^  e);
+			 System::Void submitNameButton_Click(System::Object^  sender, System::EventArgs^  e);
+			 System::Void scoreBoard_SizeChanged(System::Object^  sender, System::EventArgs^  e);
+			 System::Void startGameButton_Click(System::Object^  sender, System::EventArgs^  e);
+			 System::Void highscoresButton_Click(System::Object^  sender, System::EventArgs^  e);
+			 System::Void mainMenuPanelReturnButton_Click(System::Object^  sender, System::EventArgs^  e);
+			 System::Void newGameButton_Click(System::Object^  sender, System::EventArgs^  e);
 	
 };
 

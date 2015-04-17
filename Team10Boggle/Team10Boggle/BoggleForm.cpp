@@ -16,23 +16,28 @@ using namespace System::Resources;
 
 namespace view{
 	BoggleForm::BoggleForm(){
-		this->InitializeComponent();
-		this->boggle = gcnew Boggle();
-		this->label2->DataBindings->Add(gcnew Binding("Text", this->boggle, "PlayerScore"));
-		this->endScoreLabel->DataBindings->Add(gcnew Binding("Text", this->boggle, "PlayerScore"));
-		this->mainMenuPanel->Visible = true;
-		this->mainMenuPanel->BringToFront();
+		this->initializeGameInterface();
+		this->initializeStringResources();
+		this->showMainMenu();
+		this->gameRunning = false;
 	}
 
-	System::Void BoggleForm::newGameButton_Click(System::Object^  sender, System::EventArgs^  e){
-		this->boggle = gcnew Boggle();
+	void BoggleForm::initializeGameInterface(){
+		this->InitializeComponent();
+		this->resourceManager = gcnew Resources::ResourceManager(L"view.Strings", this->GetType()->Assembly);
+		this->dice = gcnew DieCollection();
+		this->diceButtons = gcnew array<CheckBox^, 2>(4, 4);	
+		this->iterate(gcnew IterateFunction(this, &BoggleForm::generateCheckBoxLetter));
+		this->boggle = gcnew Boggle(this->getBoardArray());
+		this->label2->DataBindings->Add(gcnew Binding("Text", this->boggle, "PlayerScore"));
+		this->endScoreLabel->DataBindings->Add(gcnew Binding("Text", this->boggle, "PlayerScore"));
 		this->missedWords = gcnew List<String^>();
-		this->listBox1->DataSource = this->boggle->playersWords;
+		this->playerWordBank->DataSource = this->boggle->PlayersWords;
+		this->allPossibleWordBox->DataSource = this->boggle->AllPossibleWords;
+		this->userSubmittedWordBox->DataSource = this->boggle->PlayersWords;
 		this->boggle->PlayerScore = 0;
 		this->second = 60;
 		this->minute = 2;
-		this->timer1->Start();
-		this->diceButtons = gcnew array<CheckBox^, 2>(4, 4);
 		this->checkedBoxes = gcnew List<CheckBox^>();
 		this->currentNeighbors = gcnew List<CheckBox^>();
 		this->lastBoxChecked = gcnew CheckBox();
@@ -43,50 +48,50 @@ namespace view{
 		this->letters = gcnew ObservableCollection<String^>();
 		this->rotateButton->GotFocus += gcnew EventHandler(this, &BoggleForm::button_GotFocus);
 		this->addWordButton->GotFocus += gcnew EventHandler(this, &BoggleForm::button_GotFocus);
-		this->gamePanel->BringToFront();
-		DieCollection^ dice = gcnew DieCollection();
+		this->showGamePanel();
+	}
+
+	void BoggleForm::loadNameBoxPlayers(){
 		for each (Player^ player in this->boggle->Players->Players){
 			if (!this->nameBox->Items->Contains(player->Name)){
 				this->nameBox->Items->Add(player->Name);
 			}
 		}
-		for (int i = 0; i < 4; i++){
-			for (int j = 0; j < 4; j++){
-				this->diceButtons[i, j] = this->getCheckBox(j, i);
-				this->diceButtons[i, j]->Text = dice->getRandomDie()->letter;
-				this->diceButtons[i, j]->AutoCheck = false;
-			}
-		}
-
 	}
 
-	System::Void BoggleForm::getMissedWords() {
-		array<String^, 2>^ board = getBoardArray();
-		this->boggleSolver = gcnew BoggleSolver(this->boggle->Dictionary, board);
-		for each (String^ word in this->boggleSolver->Words) {
-			Word^ currWord = gcnew Word(word);
-			if (word->Length > 2){
-				if (!this->boggle->playersWords->Contains(currWord)) {
-					this->missedWords->Add(word);
-					word = word->ToLower();
-					String^ firstLetter = Char::ToUpper(word->ToCharArray()[0]).ToString();
-					word = word->Substring(1, word->Length - 1);
-					word = firstLetter + word;
-					this->allPossibleWordBox->Items->Add(word);
-				}
-				else
-				{
-					word = word->ToLower();
+	void BoggleForm::showMainMenu(){
+		this->mainMenuPanel->Visible = true;
+		this->mainMenuPanel->BringToFront();
+	}
+	void BoggleForm::showGamePanel(){
+		this->gamePanel->BringToFront();
+		this->gamePanel->Visible = true;
+		this->gamePanel->Enabled = true;
+	}
+	void BoggleForm::initializeStringResources(){
+		this->startGameButton->Text = this->resourceManager->GetString(L"StartGame");
+		this->highscoresButton->Text = this->resourceManager->GetString(L"Highscores");
+		this->boggleTitle->Text = this->resourceManager->GetString(L"BoggleTitle");
+		this->addWordButton->Text = this->resourceManager->GetString(L"Add");
+		this->submitNameButton->Text = this->resourceManager->GetString(L"Ok");
+		this->nameLabel->Text = this->resourceManager->GetString(L"Name");
+		this->gamePanelScoreLabel->Text = this->resourceManager->GetString(L"Score");
+		this->endScoreLabel->Text = this->resourceManager->GetString(L"EndScore");
+		this->allWordsTab->Text = this->resourceManager->GetString(L"AllWords");
+		this->playerWordsTab->Text = this->resourceManager->GetString(L"YourWords");
+		this->timeUpLabel->Text = this->resourceManager->GetString(L"TimesUp");
+	}
 
-					String^ firstLetter = Char::ToUpper(word->ToCharArray()[0]).ToString();
-					word = word->Substring(1, word->Length - 1);
-					word = firstLetter + word;
-					this->allPossibleWordBox->Items->Add(word);
-					this->userSubmittedWordBox->Items->Add(word);
-				}
-			}
-			
-		}
+	void BoggleForm::generateCheckBoxLetter(int col, int row){
+		this->diceButtons[col, row] = this->getCheckBox(row, col);
+		this->diceButtons[col, row]->Text = this->dice->getRandomDie()->letter;
+		this->diceButtons[col, row]->AutoCheck = false;
+	}
+
+	System::Void BoggleForm::newGameButton_Click(System::Object^  sender, System::EventArgs^  e){
+		this->initializeGameInterface();
+		this->gameRunning = true;
+		this->timer1->Start();
 	}
 
 	System::Void BoggleForm::nameBox_TextChanged(System::Object^  sender, System::EventArgs^  e){
@@ -116,50 +121,22 @@ namespace view{
 		}
 	}
 	System::Void BoggleForm::startGameButton_Click(System::Object^  sender, System::EventArgs^  e){
-		this->missedWords = gcnew List<String^>();
-		this->listBox1->DataSource = this->boggle->playersWords;
-		this->boggle->PlayerScore = 0;
-		this->second = 60;
-		this->minute = 2;
-		this->timer1->Start();
-		this->diceButtons = gcnew array<CheckBox^, 2>(4, 4);
-		this->checkedBoxes = gcnew List<CheckBox^>();
-		this->currentNeighbors = gcnew List<CheckBox^>();
-		this->lastBoxChecked = gcnew CheckBox();
-		this->allUnchecked = true;
-		this->mouseDown = false;
-		this->draggedOverBoxCount = 0;
-		this->playerManager = gcnew PlayerManager();
-		this->letters = gcnew ObservableCollection<String^>();
-		this->rotateButton->GotFocus += gcnew EventHandler(this, &BoggleForm::button_GotFocus);
-		this->addWordButton->GotFocus += gcnew EventHandler(this, &BoggleForm::button_GotFocus);
-		this->resizing = false;
-		this->mainMenuPanel->Visible = false;
+		this->initializeGameInterface();
 		this->gameRunning = true;
-		this->gamePanel->BringToFront();
-		DieCollection^ dice = gcnew DieCollection();
-		for each (Player^ player in this->boggle->Players->Players){
-			if (!this->nameBox->Items->Contains(player->Name)){
-				this->nameBox->Items->Add(player->Name);
-			}
-		}
-		for (int i = 0; i < 4; i++){
-			for (int j = 0; j < 4; j++){
-				this->diceButtons[i, j] = this->getCheckBox(j, i);
-				this->diceButtons[i, j]->Text = dice->getRandomDie()->letter;
-				this->diceButtons[i, j]->AutoCheck = false;
-			}
-		}
+		this->timer1->Start();
 	}
 
-	System::Void BoggleForm::highscoresButton_Click(System::Object^  sender, System::EventArgs^  e){
-		this->mainMenuPanel->Visible = false;
+	void BoggleForm::showHighscorePanel(){
 		this->highScorePanel->Visible = true;
 		this->highScorePanel->BringToFront();
+	}
+	System::Void BoggleForm::highscoresButton_Click(System::Object^  sender, System::EventArgs^  e){
+		this->showHighscorePanel();
 		this->scoreBoard->Items->Clear();
 
 		for (int i = 0; i < 10 && i < this->boggle->Players->Players->Count; i++){
-			ListViewItem^ item = gcnew ListViewItem(gcnew array < String^ > {this->boggle->Players->Players[i]->Name, this->boggle->Players->Players[i]->Score.ToString()});
+			ListViewItem^ item = gcnew ListViewItem(gcnew array < String^ > {this->boggle->Players->Players[i]->Name, 
+													this->boggle->Players->Players[i]->Score.ToString()});
 			this->scoreBoard->Items->Add(item);
 		}
 
@@ -176,16 +153,13 @@ namespace view{
 		this->boggle->sortPlayersByScore();
 		fileio->savePlayers(this->boggle->Players->Players);
 		this->endGamePrompt->Visible = false;
+		this->showEndGamePanel();
+	}
+
+	void BoggleForm::showEndGamePanel(){
 		this->endGamePanel->Visible = true;
 		this->endGamePanel->BringToFront();
-		this->getMissedWords();
 	}
-
-	Void BoggleForm::BoggleForm_Load(Object^  sender, EventArgs^  e) {
-
-	}
-
-
 	array<String^, 2>^ BoggleForm::getBoardArray() {
 		array<String^, 2>^ board = gcnew array<String^, 2>(4, 4);
 		for (int i = 0; i < 4; i++){
@@ -280,7 +254,7 @@ namespace view{
 
 	System::Void BoggleForm::addWordButton_Click(System::Object^  sender, System::EventArgs^  e){
 		Word^ word = gcnew Word(this->label4->Text);
-		if (this->boggle->isDefinedWord(word) && word->length > 2 && !this->boggle->playersWords->Contains(word)){
+		if (this->boggle->isDefinedWord(word) && word->length > 2 && !this->boggle->PlayersWords->Contains(word)){
 			this->boggle->addWord(word);
 			this->boggle->scoreWord(word);
 			PlaySound(L"correct.wav", NULL, SND_FILENAME | SND_ASYNC);
@@ -301,7 +275,6 @@ namespace view{
 
 	System::Void BoggleForm::timer1_Tick(System::Object^  sender, System::EventArgs^  e) {
 		if (this->gameRunning){
-
 			this->second--;
 
 			this->secondString = Convert::ToString(second);
@@ -311,25 +284,31 @@ namespace view{
 				this->label3->Text = minuteString + ":0" + secondString;
 			}
 			else if (this->second == 0 && this->minute != 0){
-				this->label3->Text = minuteString + ":00";
-				this->second = 60;
-				minute--;
+				this->changeTimerMinute();
 			}
 			else if (minute == 0 && second == 0){
-				this->label3->Text = "0:00";
-				this->timer1->Stop();
-				this->endGamePrompt->Visible = true;
-				this->endGamePrompt->BringToFront();
-				this->checkBoxContainer->Enabled = false;
-				this->addWordButton->Enabled = false;
-				this->rotateButton->Enabled = false;
+				this->endGame();
 			}
 			else {
 				this->label3->Text = minuteString + ":" + secondString;
 			}
 		}
 	}
-
+	void BoggleForm::changeTimerMinute(){
+		this->label3->Text = minuteString + ":00";
+		this->second = 60;
+		this->minute--;
+	}
+	void BoggleForm::endGame(){
+		this->label3->Text = "0:00";
+		this->timer1->Stop();
+		this->gameRunning = false;
+		this->loadNameBoxPlayers();
+		this->endGamePrompt->Visible = true;
+		this->checkBoxContainer->Enabled = false;
+		this->addWordButton->Enabled = false;
+		this->rotateButton->Enabled = false;
+	}
 	bool BoggleForm::clickedValidCheckedBox(CheckBox^ checkBox){
 		return (checkBox->Checked && this->lastBoxChecked == checkBox);
 	}
@@ -369,7 +348,6 @@ namespace view{
 	}
 
 	void BoggleForm::removeLastLetterFromWord(CheckBox^ checkBox){
-
 		this->label4->Text = this->label4->Text->Replace(checkBox->Text->ToUpper(), "");
 	}
 
@@ -378,9 +356,15 @@ namespace view{
 			this->lastBoxChecked = this->checkedBoxes[this->checkedBoxes->Count - 1];
 		}
 	}
-
-	void BoggleForm::updateCheckedBoxesList(){
-
+	void BoggleForm::addNeighborsInColumnBefore(int row, int column, Row neighboringRow){
+		this->currentNeighbors->Add(this->diceButtons[row, column - 1]);
+		this->currentNeighbors->Add(this->diceButtons[row + (int)neighboringRow, column]);
+		this->currentNeighbors->Add(this->diceButtons[row + (int)neighboringRow, column - 1]);
+	}
+	void BoggleForm::addNeighborsInColumnAfter(int row, int column, Row neighboringRow){
+		this->currentNeighbors->Add(this->diceButtons[row, column + 1]);
+		this->currentNeighbors->Add(this->diceButtons[row + (int)neighboringRow, column]);
+		this->currentNeighbors->Add(this->diceButtons[row + (int)neighboringRow, column + 1]);
 	}
 	void BoggleForm::calculateNeighborsAt(Row neighboringRow){
 		TableLayoutPanelCellPosition checkedBoxLocation =
@@ -390,14 +374,10 @@ namespace view{
 		int column = checkedBoxLocation.Column;
 
 		if (this->lastBoxCheckedHas(Column::BEFORE)){
-			this->currentNeighbors->Add(this->diceButtons[row, column - 1]);
-			this->currentNeighbors->Add(this->diceButtons[row + (int)neighboringRow, column]);
-			this->currentNeighbors->Add(this->diceButtons[row + (int)neighboringRow, column - 1]);
+			this->addNeighborsInColumnBefore(row, column, neighboringRow);
 		}
 		if (this->lastBoxCheckedHas(Column::AFTER)){
-			this->currentNeighbors->Add(this->diceButtons[row, column + 1]);
-			this->currentNeighbors->Add(this->diceButtons[row + (int)neighboringRow, column]);
-			this->currentNeighbors->Add(this->diceButtons[row + (int)neighboringRow, column + 1]);
+			addNeighborsInColumnAfter(row, column, neighboringRow);
 		}
 	}
 

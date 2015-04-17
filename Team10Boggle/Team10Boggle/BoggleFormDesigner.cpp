@@ -10,8 +10,8 @@ namespace view{
 		this->components = (gcnew System::ComponentModel::Container());
 		System::ComponentModel::ComponentResourceManager^  resources = (gcnew System::ComponentModel::ComponentResourceManager(BoggleForm::typeid));
 		this->backgroundWorker1 = (gcnew System::ComponentModel::BackgroundWorker());
-		this->listBox1 = (gcnew System::Windows::Forms::ListBox());
-		this->label1 = (gcnew System::Windows::Forms::Label());
+		this->playerWordBank = (gcnew System::Windows::Forms::ListBox());
+		this->gamePanelScoreLabel = (gcnew System::Windows::Forms::Label());
 		this->label2 = (gcnew System::Windows::Forms::Label());
 		this->timer1 = (gcnew System::Windows::Forms::Timer(this->components));
 		this->label3 = (gcnew System::Windows::Forms::Label());
@@ -24,7 +24,7 @@ namespace view{
 		this->col1 = (gcnew System::Windows::Forms::ColumnHeader());
 		this->col2 = (gcnew System::Windows::Forms::ColumnHeader());
 		this->mainMenuPanel = (gcnew System::Windows::Forms::Panel());
-		this->label5 = (gcnew System::Windows::Forms::Label());
+		this->boggleTitle = (gcnew System::Windows::Forms::Label());
 		this->highscoresButton = (gcnew System::Windows::Forms::Button());
 		this->startGameButton = (gcnew System::Windows::Forms::Button());
 		this->endGamePanel = (gcnew System::Windows::Forms::Panel());
@@ -72,31 +72,31 @@ namespace view{
 		this->checkBoxContainer->SuspendLayout();
 		this->SuspendLayout();
 		// 
-		// listBox1
+		// playerWordBank
 		// 
-		this->listBox1->Font = (gcnew System::Drawing::Font(L"Fairview Regular", 20.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+		this->playerWordBank->Font = (gcnew System::Drawing::Font(L"Fairview Regular", 20.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 			static_cast<System::Byte>(0)));
-		this->listBox1->ForeColor = System::Drawing::Color::Black;
-		this->listBox1->ItemHeight = 27;
-		this->listBox1->Location = System::Drawing::Point(404, 67);
-		this->listBox1->Margin = System::Windows::Forms::Padding(3, 4, 3, 4);
-		this->listBox1->Name = L"listBox1";
-		this->listBox1->SelectionMode = System::Windows::Forms::SelectionMode::None;
-		this->listBox1->Size = System::Drawing::Size(129, 220);
-		this->listBox1->TabIndex = 3;
-		this->listBox1->MouseUp += gcnew System::Windows::Forms::MouseEventHandler(this, &BoggleForm::checkBox_MouseUp);
+		this->playerWordBank->ForeColor = System::Drawing::Color::Black;
+		this->playerWordBank->ItemHeight = 27;
+		this->playerWordBank->Location = System::Drawing::Point(404, 67);
+		this->playerWordBank->Margin = System::Windows::Forms::Padding(3, 4, 3, 4);
+		this->playerWordBank->Name = L"playerWordBank";
+		this->playerWordBank->SelectionMode = System::Windows::Forms::SelectionMode::None;
+		this->playerWordBank->Size = System::Drawing::Size(129, 220);
+		this->playerWordBank->TabIndex = 3;
+		this->playerWordBank->MouseUp += gcnew System::Windows::Forms::MouseEventHandler(this, &BoggleForm::checkBox_MouseUp);
 		// 
-		// label1
+		// gamePanelScoreLabel
 		// 
-		this->label1->AutoSize = true;
-		this->label1->Font = (gcnew System::Drawing::Font(L"Fairview Regular", 26.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
-			static_cast<System::Byte>(0)));
-		this->label1->Location = System::Drawing::Point(417, 291);
-		this->label1->Name = L"label1";
-		this->label1->Size = System::Drawing::Size(72, 35);
-		this->label1->TabIndex = 6;
-		this->label1->Text = L"Score:";
-		this->label1->MouseUp += gcnew System::Windows::Forms::MouseEventHandler(this, &BoggleForm::checkBox_MouseUp);
+		this->gamePanelScoreLabel->AutoSize = true;
+		this->gamePanelScoreLabel->Font = (gcnew System::Drawing::Font(L"Fairview Regular", 26.25F, System::Drawing::FontStyle::Regular,
+			System::Drawing::GraphicsUnit::Point, static_cast<System::Byte>(0)));
+		this->gamePanelScoreLabel->Location = System::Drawing::Point(417, 291);
+		this->gamePanelScoreLabel->Name = L"gamePanelScoreLabel";
+		this->gamePanelScoreLabel->Size = System::Drawing::Size(72, 35);
+		this->gamePanelScoreLabel->TabIndex = 6;
+		this->gamePanelScoreLabel->Text = L"Score:";
+		this->gamePanelScoreLabel->MouseUp += gcnew System::Windows::Forms::MouseEventHandler(this, &BoggleForm::checkBox_MouseUp);
 		// 
 		// label2
 		// 
@@ -113,8 +113,7 @@ namespace view{
 		// 
 		// timer1
 		// 
-		this->timer1->Enabled = true;
-		this->timer1->Interval = 1000;
+		this->timer1->Interval = 1;
 		this->timer1->Tick += gcnew System::EventHandler(this, &BoggleForm::timer1_Tick);
 		// 
 		// label3
@@ -220,7 +219,7 @@ namespace view{
 		// mainMenuPanel
 		// 
 		this->mainMenuPanel->BackColor = System::Drawing::Color::DarkSeaGreen;
-		this->mainMenuPanel->Controls->Add(this->label5);
+		this->mainMenuPanel->Controls->Add(this->boggleTitle);
 		this->mainMenuPanel->Controls->Add(this->highscoresButton);
 		this->mainMenuPanel->Controls->Add(this->startGameButton);
 		this->mainMenuPanel->Cursor = System::Windows::Forms::Cursors::Default;
@@ -230,20 +229,20 @@ namespace view{
 		this->mainMenuPanel->Size = System::Drawing::Size(584, 460);
 		this->mainMenuPanel->TabIndex = 13;
 		// 
-		// label5
+		// boggleTitle
 		// 
-		this->label5->BackColor = System::Drawing::Color::SeaGreen;
-		this->label5->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
-		this->label5->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
-		this->label5->Font = (gcnew System::Drawing::Font(L"Fairview Regular", 99.74999F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+		this->boggleTitle->BackColor = System::Drawing::Color::SeaGreen;
+		this->boggleTitle->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
+		this->boggleTitle->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
+		this->boggleTitle->Font = (gcnew System::Drawing::Font(L"Fairview Regular", 99.74999F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 			static_cast<System::Byte>(0)));
-		this->label5->ForeColor = System::Drawing::SystemColors::ButtonHighlight;
-		this->label5->Location = System::Drawing::Point(0, 64);
-		this->label5->Name = L"label5";
-		this->label5->Size = System::Drawing::Size(585, 176);
-		this->label5->TabIndex = 2;
-		this->label5->Text = L"BOGGLE!";
-		this->label5->TextAlign = System::Drawing::ContentAlignment::MiddleCenter;
+		this->boggleTitle->ForeColor = System::Drawing::SystemColors::ButtonHighlight;
+		this->boggleTitle->Location = System::Drawing::Point(0, 64);
+		this->boggleTitle->Name = L"boggleTitle";
+		this->boggleTitle->Size = System::Drawing::Size(585, 176);
+		this->boggleTitle->TabIndex = 2;
+		this->boggleTitle->Text = L"BOGGLE!";
+		this->boggleTitle->TextAlign = System::Drawing::ContentAlignment::MiddleCenter;
 		// 
 		// highscoresButton
 		// 
@@ -434,11 +433,11 @@ namespace view{
 		this->gamePanel->BackColor = System::Drawing::Color::DarkSeaGreen;
 		this->gamePanel->Controls->Add(this->endGamePrompt);
 		this->gamePanel->Controls->Add(this->checkBoxContainer);
-		this->gamePanel->Controls->Add(this->listBox1);
+		this->gamePanel->Controls->Add(this->playerWordBank);
 		this->gamePanel->Controls->Add(this->label2);
 		this->gamePanel->Controls->Add(this->label3);
 		this->gamePanel->Controls->Add(this->rotateButton);
-		this->gamePanel->Controls->Add(this->label1);
+		this->gamePanel->Controls->Add(this->gamePanelScoreLabel);
 		this->gamePanel->Controls->Add(this->label4);
 		this->gamePanel->Controls->Add(this->addWordButton);
 		this->gamePanel->Dock = System::Windows::Forms::DockStyle::Fill;
@@ -476,6 +475,7 @@ namespace view{
 		// 
 		this->submitNameButton->Anchor = System::Windows::Forms::AnchorStyles::Right;
 		this->submitNameButton->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Zoom;
+		this->submitNameButton->Cursor = System::Windows::Forms::Cursors::Hand;
 		this->submitNameButton->Enabled = false;
 		this->submitNameButton->Location = System::Drawing::Point(77, 62);
 		this->submitNameButton->Name = L"submitNameButton";
@@ -1089,8 +1089,7 @@ namespace view{
 		this->Name = L"BoggleForm";
 		this->SizeGripStyle = System::Windows::Forms::SizeGripStyle::Hide;
 		this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
-		this->Text = L"BoggleForm";
-		this->Load += gcnew System::EventHandler(this, &BoggleForm::BoggleForm_Load);
+		this->Text = L"Boggle by Mac Peluso and Osa Gaius";
 		this->MouseUp += gcnew System::Windows::Forms::MouseEventHandler(this, &BoggleForm::checkBox_MouseUp);
 		this->highScorePanel->ResumeLayout(false);
 		this->mainMenuPanel->ResumeLayout(false);

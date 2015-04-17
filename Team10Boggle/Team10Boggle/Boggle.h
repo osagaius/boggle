@@ -6,6 +6,7 @@
 #include "Trie.h"
 #include "Word.h"
 #include "PlayerManager.h"
+#include "BoggleSolver.h"
 using namespace model;
 using namespace System;
 using namespace System::Collections::Generic;
@@ -23,7 +24,7 @@ namespace model{
 	{
 
 	public:
-		Boggle();
+		Boggle(array<String^, 2>^ board);
 		virtual event PropertyChangedEventHandler^ PropertyChanged;
 		virtual void OnPropertyChanged(String^ property);
 		void addWord(Word^ word);
@@ -32,11 +33,14 @@ namespace model{
 		void sortPlayersByScore();
 
 #pragma region Properties
-		property BindingList<Word^>^ playersWords{
+		property BindingList<Word^>^ PlayersWords{
 			BindingList<Word^>^ get(){ return this->submittedWords; }
 			void set(BindingList<Word^>^ listOfWords){ this->submittedWords = listOfWords; }
 		}
-
+		property BindingList<Word^>^ AllPossibleWords{
+			BindingList<Word^>^ get(){ return this->allPossibleWords; }
+			void set(BindingList<Word^>^ listOfWords){ this->allPossibleWords = listOfWords; }
+		}
 		property Trie^ Dictionary{
 			Trie^ get(){ return this->dictionary; }
 		}
@@ -53,8 +57,11 @@ namespace model{
 
 	private:
 		Trie^ dictionary;
+		array<String^, 2>^ board;
+		BoggleSolver^ boggleSolver;
 		BindingList<Word^>^ submittedWords;
 		int score;
 		PlayerManager^ playerManager;
+		BindingList<Word^>^ allPossibleWords;
 	};
 }
