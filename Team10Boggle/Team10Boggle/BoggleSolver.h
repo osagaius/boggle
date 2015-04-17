@@ -38,6 +38,7 @@ namespace model
 		void generateAllWords();
 		void setValidWords(Trie^ lexicon);
 		array<Vertex^, 2>^ getBoard(array<String^, 2>^ board);
+		//array<Vertex^, 2>^ addNeighbors(array<Vertex^, 2>^ board);
 	};
 
 }

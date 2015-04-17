@@ -6,6 +6,8 @@ using namespace System;
 
 namespace model
 {
+	const int boardLength = 4;
+
 	BoggleSolver::BoggleSolver(Trie^ lexicon, array<String^, 2>^ board)
 	{
 		this->allWords = gcnew List<String^>();
@@ -28,11 +30,11 @@ namespace model
 			for (int j = 0; j < 4; j++) {
 				if (i > 0)
 					boardg[i, j]->addNeighbor(boardg[i - 1, j]);
-				if (i < 4 - 1)
+				if (i < boardLength - 1)
 					boardg[i,j]->addNeighbor(boardg[i + 1,j]);
 				if (j > 0)
 					boardg[i,j]->addNeighbor(boardg[i,j - 1]);
-				if (j < 4 - 1)
+				if (j < boardLength - 1)
 					boardg[i,j]->addNeighbor(boardg[i,j + 1]);
 			}
 		}
