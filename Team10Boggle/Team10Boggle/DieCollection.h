@@ -1,13 +1,21 @@
 #pragma once
 #include "Die.h"
-ref class DieCollection
+namespace model
 {
-public:
-	DieCollection();
-	void generateListOfDie();
-	Die^ getRandomDie();
-private:
-	List<Die^>^ listOfDie;
-};
+	/// <summary>
+	/// Models a collection of die.
+	/// </summary>
+	ref class DieCollection
+	{
+
+	public:
+		DieCollection();
+		void generateListOfDie();
+		Die^ getRandomDie();
+
+	private:
+		List<Die^>^ listOfDie;
+	};
+}
 
 
