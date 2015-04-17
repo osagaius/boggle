@@ -18,11 +18,20 @@ namespace view{
 	BoggleForm::BoggleForm(){
 		this->InitializeComponent();
 		this->boggle = gcnew Boggle();
+		this->label2->DataBindings->Add(gcnew Binding("Text", this->boggle, "PlayerScore"));
+		this->endScoreLabel->DataBindings->Add(gcnew Binding("Text", this->boggle, "PlayerScore"));
+		this->mainMenuPanel->Visible = true;
+		this->mainMenuPanel->BringToFront();
+	}
+
+	System::Void BoggleForm::newGameButton_Click(System::Object^  sender, System::EventArgs^  e){
+		this->boggle = gcnew Boggle();
 		this->missedWords = gcnew List<String^>();
 		this->listBox1->DataSource = this->boggle->playersWords;
-		this->label2->DataBindings->Add(gcnew Binding("Text", this->boggle, "PlayerScore"));
+		this->boggle->PlayerScore = 0;
 		this->second = 60;
 		this->minute = 2;
+		this->timer1->Start();
 		this->diceButtons = gcnew array<CheckBox^, 2>(4, 4);
 		this->checkedBoxes = gcnew List<CheckBox^>();
 		this->currentNeighbors = gcnew List<CheckBox^>();
@@ -34,29 +43,46 @@ namespace view{
 		this->letters = gcnew ObservableCollection<String^>();
 		this->rotateButton->GotFocus += gcnew EventHandler(this, &BoggleForm::button_GotFocus);
 		this->addWordButton->GotFocus += gcnew EventHandler(this, &BoggleForm::button_GotFocus);
-		this->resizing = false;
-		this->gameRunning = false;
-		this->mainMenuPanel->BringToFront();
+		this->gamePanel->BringToFront();
+		DieCollection^ dice = gcnew DieCollection();
+		for each (Player^ player in this->boggle->Players->Players){
+			if (!this->nameBox->Items->Contains(player->Name)){
+				this->nameBox->Items->Add(player->Name);
+			}
+		}
+		for (int i = 0; i < 4; i++){
+			for (int j = 0; j < 4; j++){
+				this->diceButtons[i, j] = this->getCheckBox(j, i);
+				this->diceButtons[i, j]->Text = dice->getRandomDie()->letter;
+				this->diceButtons[i, j]->AutoCheck = false;
+			}
+		}
+
 	}
 
-	/// <summary>
-	/// Gets the missed words.
-	/// </summary>
 	System::Void BoggleForm::getMissedWords() {
 		array<String^, 2>^ board = getBoardArray();
 		this->boggleSolver = gcnew BoggleSolver(this->boggle->Dictionary, board);
 		for each (String^ word in this->boggleSolver->Words) {
 			Word^ currWord = gcnew Word(word);
 			if (word->Length > 2){
-				if (!this->listBox1->Items->Contains(word->ToString())) {
+				if (!this->boggle->playersWords->Contains(currWord)) {
 					this->missedWords->Add(word);
-					this->listBox2->Items->Add(word->ToUpper());
+					word = word->ToLower();
+					String^ firstLetter = Char::ToUpper(word->ToCharArray()[0]).ToString();
+					word = word->Substring(1, word->Length - 1);
+					word = firstLetter + word;
+					this->allPossibleWordBox->Items->Add(word);
 				}
 				else
 				{
-					this->missedWords->Add(word);
-					this->listBox2->Items->Add(word->ToUpper());
-					this->listBox2->ForeColor.Red;
+					word = word->ToLower();
+
+					String^ firstLetter = Char::ToUpper(word->ToCharArray()[0]).ToString();
+					word = word->Substring(1, word->Length - 1);
+					word = firstLetter + word;
+					this->allPossibleWordBox->Items->Add(word);
+					this->userSubmittedWordBox->Items->Add(word);
 				}
 			}
 			
@@ -90,8 +116,40 @@ namespace view{
 		}
 	}
 	System::Void BoggleForm::startGameButton_Click(System::Object^  sender, System::EventArgs^  e){
+		this->missedWords = gcnew List<String^>();
+		this->listBox1->DataSource = this->boggle->playersWords;
+		this->boggle->PlayerScore = 0;
+		this->second = 60;
+		this->minute = 2;
+		this->timer1->Start();
+		this->diceButtons = gcnew array<CheckBox^, 2>(4, 4);
+		this->checkedBoxes = gcnew List<CheckBox^>();
+		this->currentNeighbors = gcnew List<CheckBox^>();
+		this->lastBoxChecked = gcnew CheckBox();
+		this->allUnchecked = true;
+		this->mouseDown = false;
+		this->draggedOverBoxCount = 0;
+		this->playerManager = gcnew PlayerManager();
+		this->letters = gcnew ObservableCollection<String^>();
+		this->rotateButton->GotFocus += gcnew EventHandler(this, &BoggleForm::button_GotFocus);
+		this->addWordButton->GotFocus += gcnew EventHandler(this, &BoggleForm::button_GotFocus);
+		this->resizing = false;
 		this->mainMenuPanel->Visible = false;
 		this->gameRunning = true;
+		this->gamePanel->BringToFront();
+		DieCollection^ dice = gcnew DieCollection();
+		for each (Player^ player in this->boggle->Players->Players){
+			if (!this->nameBox->Items->Contains(player->Name)){
+				this->nameBox->Items->Add(player->Name);
+			}
+		}
+		for (int i = 0; i < 4; i++){
+			for (int j = 0; j < 4; j++){
+				this->diceButtons[i, j] = this->getCheckBox(j, i);
+				this->diceButtons[i, j]->Text = dice->getRandomDie()->letter;
+				this->diceButtons[i, j]->AutoCheck = false;
+			}
+		}
 	}
 
 	System::Void BoggleForm::highscoresButton_Click(System::Object^  sender, System::EventArgs^  e){
@@ -107,9 +165,9 @@ namespace view{
 	}
 
 	System::Void BoggleForm::mainMenuPanelReturnButton_Click(System::Object^  sender, System::EventArgs^  e){
-		this->highScorePanel->Visible = false;
-		this->highScorePanel->SendToBack();
 		this->mainMenuPanel->Visible = true;
+		this->mainMenuPanel->BringToFront();
+		this->scoreBoard->Items->Clear();
 	}
 	System::Void BoggleForm::submitNameButton_Click(System::Object^  sender, System::EventArgs^  e){
 		this->boggle->Players->addPlayer(this->nameBox->Text, this->boggle->PlayerScore);
@@ -117,25 +175,12 @@ namespace view{
 		this->boggle->sortPlayersByScore();
 		fileio->savePlayers(this->boggle->Players->Players);
 		this->endGamePrompt->Visible = false;
-		this->panel1->Visible = true;
-		this->panel1->BringToFront();
+		this->endGamePanel->Visible = true;
+		this->endGamePanel->BringToFront();
 		this->getMissedWords();
 	}
 
 	Void BoggleForm::BoggleForm_Load(Object^  sender, EventArgs^  e) {
-		DieCollection^ dice = gcnew DieCollection();
-		for each (Player^ player in this->boggle->Players->Players){
-			if (!this->nameBox->Items->Contains(player->Name)){
-				this->nameBox->Items->Add(player->Name);
-			}
-		}
-		for (int i = 0; i < 4; i++){
-			for (int j = 0; j < 4; j++){
-				this->diceButtons[i, j] = this->getCheckBox(j, i);
-				this->diceButtons[i, j]->Text = dice->getRandomDie()->letter;
-				this->diceButtons[i, j]->AutoCheck = false;
-			}
-		}
 
 	}
 
@@ -155,7 +200,7 @@ namespace view{
 
 		if (this->clickedValidUncheckedBox(checkBox)){
 			PlaySound(L"check.wav", NULL, SND_FILENAME | SND_ASYNC);
-			checkBox->FlatAppearance->MouseOverBackColor = System::Drawing::Color::RoyalBlue;
+			checkBox->FlatAppearance->MouseOverBackColor = System::Drawing::Color::DimGray;
 			checkBox->CheckState = CheckState::Checked;
 		}
 		else if (this->clickedValidCheckedBox(checkBox)){
@@ -206,7 +251,7 @@ namespace view{
 		}
 		else
 		{
-			checkBox->FlatAppearance->MouseOverBackColor = System::Drawing::Color::RoyalBlue;
+			checkBox->FlatAppearance->MouseOverBackColor = System::Drawing::Color::DimGray;
 		}
 	}
 	System::Void BoggleForm::rotateButton_Click(System::Object^  sender, System::EventArgs^  e){

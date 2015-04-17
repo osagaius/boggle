@@ -60,11 +60,11 @@ namespace view{
 
 
 
-	private: System::Windows::Forms::Panel^  endGamePrompt;
-	private: System::Windows::Forms::ComboBox^  nameBox;
-	private: System::Windows::Forms::Button^  submitNameButton;
-	private: System::Windows::Forms::Label^  nameLabel;
-	private: System::Windows::Forms::Label^  timeUpLabel;
+
+
+
+
+
 	private: System::Windows::Forms::Panel^  mainMenuPanel;
 
 	private: System::Windows::Forms::Button^  highscoresButton;
@@ -78,7 +78,7 @@ namespace view{
 	private: System::Windows::Forms::ListView^  scoreBoard;
 	private: System::Windows::Forms::ColumnHeader^  col1;
 	private: System::Windows::Forms::ColumnHeader^  col2;
-	private: System::Windows::Forms::Button^  mainMenuPanelReturnButton;
+
 
 
 
@@ -87,8 +87,128 @@ namespace view{
 			 ObservableCollection<String^>^ letters;
 
 	private: System::Windows::Forms::MenuStrip^  menuStrip1;
-	private: System::Windows::Forms::Panel^  panel1;
-	private: System::Windows::Forms::ListBox^  listBox2;
+	private: System::Windows::Forms::Panel^  endGamePanel;
+
+	private: System::Windows::Forms::ListBox^  allPossibleWordBox;
+	private: System::Windows::Forms::Panel^  gamePanel;
+	private: System::Windows::Forms::Label^  label5;
+
+
+
+
+
+	private: System::Windows::Forms::Button^  addWordButton;
+	private: System::Windows::Forms::Panel^  endGamePrompt;
+	private: System::Windows::Forms::ComboBox^  nameBox;
+	private: System::Windows::Forms::Button^  submitNameButton;
+	private: System::Windows::Forms::Label^  nameLabel;
+	private: System::Windows::Forms::Label^  timeUpLabel;
+	private: System::Windows::Forms::Button^  mainMenuPanelReturnButton;
+	private: System::Windows::Forms::TabControl^  endGameWordTabs;
+	private: System::Windows::Forms::TabPage^  allWordsTab;
+	private: System::Windows::Forms::TabPage^  playerWordsTab;
+
+
+
+
+	private: System::Windows::Forms::ListBox^  userSubmittedWordBox;
+	private: System::Windows::Forms::TableLayoutPanel^  checkBoxContainer;
+	private: System::Windows::Forms::CheckBox^  checkBox17;
+	private: System::Windows::Forms::CheckBox^  checkBox16;
+	private: System::Windows::Forms::CheckBox^  checkBox15;
+	private: System::Windows::Forms::CheckBox^  checkBox14;
+	private: System::Windows::Forms::CheckBox^  checkBox13;
+	private: System::Windows::Forms::CheckBox^  checkBox12;
+	private: System::Windows::Forms::CheckBox^  checkBox11;
+	private: System::Windows::Forms::CheckBox^  checkBox10;
+	private: System::Windows::Forms::CheckBox^  checkBox9;
+	private: System::Windows::Forms::CheckBox^  checkBox8;
+	private: System::Windows::Forms::CheckBox^  checkBox7;
+	private: System::Windows::Forms::CheckBox^  checkBox6;
+	private: System::Windows::Forms::CheckBox^  checkBox5;
+	private: System::Windows::Forms::CheckBox^  checkBox4;
+	private: System::Windows::Forms::CheckBox^  checkBox3;
+	private: System::Windows::Forms::CheckBox^  checkBox2;
+private: System::Windows::Forms::Label^  endScoreLabel;
+private: System::Windows::Forms::Label^  finalScoreLabel;
+private: System::Windows::Forms::Button^  newGameButton;
+private: System::Windows::Forms::Button^  mainMenuButton2;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 			 int draggedOverBoxCount;
 			 CheckBox^ getCheckBox(int column, int row);
@@ -129,27 +249,27 @@ namespace view{
 			 array<CheckBox^, 2>^ diceButtons;
 			 List<CheckBox^>^ checkedBoxes;
 			 List<CheckBox^>^ currentNeighbors;
-	private: System::Windows::Forms::TableLayoutPanel^  checkBoxContainer;
 
 
-			 System::Windows::Forms::CheckBox^  checkBox17;
-			 System::Windows::Forms::CheckBox^  checkBox16;
-			 System::Windows::Forms::CheckBox^  checkBox15;
-			 System::Windows::Forms::CheckBox^  checkBox14;
-			 System::Windows::Forms::CheckBox^  checkBox13;
-			 System::Windows::Forms::CheckBox^  checkBox12;
-			 System::Windows::Forms::CheckBox^  checkBox11;
-			 System::Windows::Forms::CheckBox^  checkBox10;
-			 System::Windows::Forms::CheckBox^  checkBox9;
-			 System::Windows::Forms::CheckBox^  checkBox8;
-			 System::Windows::Forms::CheckBox^  checkBox7;
-			 System::Windows::Forms::CheckBox^  checkBox6;
-			 System::Windows::Forms::CheckBox^  checkBox5;
-			 System::Windows::Forms::CheckBox^  checkBox4;
-			 System::Windows::Forms::CheckBox^  checkBox3;
-			 System::Windows::Forms::CheckBox^  checkBox2;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 			 System::Windows::Forms::ListBox^  listBox1;
-	private: System::Windows::Forms::Button^  addWordButton;
+
 			 IterateFunction^ addLetters;
 
 			 System::Windows::Forms::Label^  label1;
@@ -170,18 +290,6 @@ namespace view{
 			 System::Void button_GotFocus(System::Object^  sender, System::EventArgs^  e);
 			 System::Void rotateButton_Click(System::Object^  sender, System::EventArgs^  e);
 
-	private: System::Void listBox1_DrawItem(System::Object^  sender, System::Windows::Forms::DrawItemEventArgs^  e) {
-				 ListBox^ list = static_cast<ListBox^>(sender);
-				 if (e->Index > -1)
-				 {
-					 Object^ item = list->Items[e->Index];
-					 e->DrawBackground();
-					 e->DrawFocusRectangle();
-					 Brush^ brush = gcnew SolidBrush(e->ForeColor);
-					 SizeF^ size = e->Graphics->MeasureString(item->ToString(), e->Font);
-					 e->Graphics->DrawString(item->ToString(), e->Font, brush, e->Bounds.Left + (e->Bounds.Width / 2 - size->Width / 2), e->Bounds.Top + (e->Bounds.Height / 2 - size->Height / 2));
-				 }
-	}
 	private: System::Void nameBox_TextChanged(System::Object^  sender, System::EventArgs^  e);
 
 	private: System::Void submitNameButton_Click(System::Object^  sender, System::EventArgs^  e);
@@ -193,6 +301,8 @@ namespace view{
 
 	private: System::Void mainMenuPanelReturnButton_Click(System::Object^  sender, System::EventArgs^  e);
 
-	};
+	private: System::Void newGameButton_Click(System::Object^  sender, System::EventArgs^  e);
+	
+};
 
 }
