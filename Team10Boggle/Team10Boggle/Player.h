@@ -17,6 +17,7 @@ namespace model
 		Player(String^ name, int score);
 		virtual int CompareTo(Player^ player);
 
+#pragma region Properties
 		property String^ Name
 		{
 			String^ get(){ return this->name; };
@@ -28,6 +29,7 @@ namespace model
 			int get(){ return this->score; };
 			void set(int value){ this->score = value; };
 		}
+#pragma endregion
 
 	private:
 		String^ name;

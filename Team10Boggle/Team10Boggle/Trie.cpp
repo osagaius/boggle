@@ -5,16 +5,20 @@ using namespace System::Configuration;
 using namespace System::Diagnostics;
 using namespace System::Runtime::InteropServices;
 
-
-
-
 namespace model{
 
+	/// <summary>
+	/// Initializes a new instance of the <see cref="Trie"/> class.
+	/// </summary>
 	Trie::Trie()
 	{
 		this->root = gcnew Node();
 	}
 
+	/// <summary>
+	/// Adds the word.
+	/// </summary>
+	/// <param name="word">The word.</param>
 	void Trie::addWord(String^ word){
 		Node^ current = this->root;
 
@@ -43,6 +47,11 @@ namespace model{
 		}
 	}
 
+	/// <summary>
+	/// Searches the word.
+	/// </summary>
+	/// <param name="word">The word.</param>
+	/// <returns></returns>
 	bool Trie::searchWord(String^ word){
 
 		word = word->ToLower();
@@ -69,6 +78,11 @@ namespace model{
 		return false;
 	}
 
+	/// <summary>
+	/// Determines whether the specified word is prefix.
+	/// </summary>
+	/// <param name="word">The word.</param>
+	/// <returns></returns>
 	bool Trie::isPrefix(String^ word){
 
 		Node^ current = this->root;

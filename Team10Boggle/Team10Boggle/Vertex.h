@@ -15,6 +15,7 @@ namespace model
 		String^ visit();
 		void addNeighbor(Vertex^ neighbor);
 
+#pragma region Properties
 		property bool Visited
 		{
 			bool get(){ return this->visited; };
@@ -26,6 +27,9 @@ namespace model
 			String^ get(){ return this->item; };
 			void set(String^ value){ this->item = value; };
 		}
+#pragma endregion
+
+
 	private:
 		List<Vertex^>^ neighbors;
 		bool visited;

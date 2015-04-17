@@ -18,12 +18,15 @@ using namespace System::Text;
 namespace fileio{
 	ref class FileIO
 	{
+
 	public:
 		FileIO();
 		Trie^ loadDictionary();
 		List<Player^>^ loadPlayers();
 		void savePlayers(List<Player^>^ players);
+
 	private:
 		array<String^>^ splitString(String^ text);
+
 	};
 }

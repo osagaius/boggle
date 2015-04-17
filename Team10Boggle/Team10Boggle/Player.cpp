@@ -15,6 +15,11 @@ namespace model
 		this->score = 0;
 	}
 
+	/// <summary>
+	/// Compares to, based on a Player's score.
+	/// </summary>
+	/// <param name="obj">The object.</param>
+	/// <returns></returns>
 	int Player::CompareTo(Player^ obj){
 		return this->Score.CompareTo(obj->Score);
 	}
