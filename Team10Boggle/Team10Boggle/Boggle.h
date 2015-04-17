@@ -13,7 +13,12 @@ using namespace System::Windows::Forms;
 using namespace System::Text;
 using namespace System::ComponentModel;
 
+
+/// <summary>
+/// Models a Boggle game.
+/// </summary>
 namespace model{
+
 	ref class Boggle : INotifyPropertyChanged
 	{
 
@@ -21,8 +26,12 @@ namespace model{
 		Boggle();
 		virtual event PropertyChangedEventHandler^ PropertyChanged;
 		virtual void OnPropertyChanged(String^ property);
+		void addWord(Word^ word);
+		bool isDefinedWord(Word^ word);
+		void scoreWord(Word^ word);
+		void sortPlayersByScore();
 
-
+#pragma region Properties
 		property BindingList<Word^>^ playersWords{
 			BindingList<Word^>^ get(){ return this->submittedWords; }
 			void set(BindingList<Word^>^ listOfWords){ this->submittedWords = listOfWords; }
@@ -40,11 +49,8 @@ namespace model{
 		property PlayerManager^ Players{
 			PlayerManager^ get(){ return this->playerManager; }
 		}
+#pragma endregion
 
-		void addWord(Word^ word);
-		bool isDefinedWord(Word^ word);
-		void scoreWord(Word^ word);
-		void sortPlayersByScore();
 	private:
 		Trie^ dictionary;
 		BindingList<Word^>^ submittedWords;
