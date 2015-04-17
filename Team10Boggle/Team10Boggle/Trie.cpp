@@ -72,16 +72,21 @@ namespace model{
 	bool Trie::isPrefix(String^ word){
 
 		Node^ current = this->root;
+		int i;
+		while (current->getChildren() != nullptr){
+			for (i = 0; i < word->Length; i++){
 
-		for (int i = 0; i < word->Length; i++){
-			Node^ tmp = current->getChild(word[i]);
+				Node^ tmp = current->getChild(word[i]);
 
-			if (tmp == nullptr){
-				return false;
+				if (tmp == nullptr){
+					return false;
+				}
+
+				current = tmp;
 			}
-			current = tmp;
+			return true;
 		}
-
-		return (!current->marker);
+		
+		return false;
 	}
 }

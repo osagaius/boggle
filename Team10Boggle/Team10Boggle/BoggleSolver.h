@@ -22,8 +22,8 @@ namespace model
 	ref class BoggleSolver
 	{
 	public:
-		BoggleSolver(Trie^ lexicon, array<String^, 2>^ board);
-		void generateWords(Trie^ dictionary, array<String^, 2>^ board);
+		BoggleSolver(Trie^ trie, array<String^, 2>^ board);
+		void generateWords(array<String^, 2>^ board);
 
 		property List<String^>^ Words
 		{
@@ -34,9 +34,10 @@ namespace model
 		List<String^>^ allWords;
 		List<String^>^ validWords;
 		List<Vertex^>^ items;
+		Trie^ lexicon;
 		void depthFirstSearch(Vertex^ vertex, String^ currentWord);
 		void generateAllWords();
-		void setValidWords(Trie^ lexicon);
+		void setValidWords();
 		array<Vertex^, 2>^ getBoard(array<String^, 2>^ board);
 	};
 

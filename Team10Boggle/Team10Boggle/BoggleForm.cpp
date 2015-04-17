@@ -50,12 +50,12 @@ namespace view{
 			if (word->Length > 2){
 				if (!this->listBox1->Items->Contains(word->ToString())) {
 					this->missedWords->Add(word);
-					this->listBox2->Items->Add(word);
+					this->listBox2->Items->Add(word->ToUpper());
 				}
 				else
 				{
 					this->missedWords->Add(word);
-					this->listBox2->Items->Add(word);
+					this->listBox2->Items->Add(word->ToUpper());
 					this->listBox2->ForeColor.Red;
 				}
 			}
@@ -136,6 +136,7 @@ namespace view{
 				this->diceButtons[i, j]->AutoCheck = false;
 			}
 		}
+
 	}
 
 

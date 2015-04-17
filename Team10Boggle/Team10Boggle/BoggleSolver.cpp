@@ -6,13 +6,13 @@ using namespace System;
 
 namespace model
 {
-	BoggleSolver::BoggleSolver(Trie^ lexicon, array<String^, 2>^ board)
+	BoggleSolver::BoggleSolver(Trie^ trie, array<String^, 2>^ board)
 	{
 		this->allWords = gcnew List<String^>();
 		this->validWords = gcnew List<String^>();
 		items = gcnew List<Vertex^>(16);
-
-		this->generateWords(lexicon, board);
+		this->lexicon = trie;
+		this->generateWords(board);
 	}
 
 	/// <summary>
@@ -20,28 +20,45 @@ namespace model
 	/// </summary>
 	/// <param name="lexicon">The lexicon.</param>
 	/// <param name="board">The board.</param>
-	void BoggleSolver::generateWords(Trie^ lexicon, array<String^, 2>^ board) {
+	void BoggleSolver::generateWords(array<String^, 2>^ board) {
 
 		array<Vertex^, 2>^ boardg = this->getBoard(board);
 
 		for (int i = 0; i < 4; i++) {
 			for (int j = 0; j < 4; j++) {
-				if (i > 0)
+				if (i > 0){
 					boardg[i, j]->addNeighbor(boardg[i - 1, j]);
-				if (i < 4 - 1)
-					boardg[i,j]->addNeighbor(boardg[i + 1,j]);
-				if (j > 0)
-					boardg[i,j]->addNeighbor(boardg[i,j - 1]);
-				if (j < 4 - 1)
-					boardg[i,j]->addNeighbor(boardg[i,j + 1]);
+					if (j > 0){
+						boardg[i, j]->addNeighbor(boardg[i, j - 1]);
+						boardg[i, j]->addNeighbor(boardg[i - 1, j - 1]);
+					}
+					if (j < 3){
+						boardg[i, j]->addNeighbor(boardg[i, j + 1]);
+						boardg[i, j]->addNeighbor(boardg[i - 1, j + 1]);
+					}
+				}
+				if (i < 3){
+					boardg[i, j]->addNeighbor(boardg[i + 1, j]);
+					if (j > 0){
+						boardg[i, j]->addNeighbor(boardg[i, j - 1]);
+						boardg[i, j]->addNeighbor(boardg[i + 1, j - 1]);
+					}
+						
+					if (j < 3){
+						boardg[i, j]->addNeighbor(boardg[i, j + 1]);
+						boardg[i, j]->addNeighbor(boardg[i + 1, j + 1]);
+					}
+				}
+					
+				
 			}
 		}
 
 		this->generateAllWords();
-		this->setValidWords(lexicon);
+		this->setValidWords();
 	}
 
-	void BoggleSolver::setValidWords(Trie^ lexicon) {
+	void BoggleSolver::setValidWords() {
 		for each (String^ currWord in this->allWords){
 			if (lexicon->searchWord(currWord) && !validWords->Contains(currWord)) {
 				this->validWords->Add(currWord);
@@ -68,15 +85,21 @@ namespace model
 
 	void BoggleSolver::depthFirstSearch(Vertex^ vertex, String^ currentWord){
 		String^ currentLetter = vertex->visit();
-		currentWord = currentWord + currentLetter;
-		this->allWords->Add(currentWord);
+		currentWord += currentLetter;
+		if (currentWord->Length > 2){
+			this->allWords->Add(currentWord);
+		}
 		vertex->Visited = true;
 		List<Vertex^>^ vertices = vertex->getVertices();
 		for each (Vertex^ v in vertices){
 			if (v->Visited != true){
-				depthFirstSearch(v, currentWord);
+				if (this->lexicon->isPrefix((currentWord + v->Item)->ToLower())){
+
+					depthFirstSearch(v, currentWord);
+				}
 			}
 		}
+
 		vertex->Visited = false;
 	}
 
