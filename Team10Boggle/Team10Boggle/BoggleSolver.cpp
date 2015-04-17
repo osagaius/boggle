@@ -73,7 +73,7 @@ namespace model
 	/// Sets the valid words.
 	/// </summary>
 	/// <param name="lexicon">The lexicon.</param>
-	void BoggleSolver::setValidWords(Trie^ lexicon) {
+	void BoggleSolver::setValidWords() {
 		for each (String^ currWord in this->allWords){
 			if (lexicon->searchWord(currWord) && !validWords->Contains(currWord)) {
 				this->validWords->Add(currWord);
