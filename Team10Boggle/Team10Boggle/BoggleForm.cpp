@@ -206,7 +206,7 @@ namespace view{
 		}
 		else if (this->clickedValidCheckedBox(checkBox)){
 			PlaySound(L"check.wav", NULL, SND_FILENAME | SND_ASYNC);
-			checkBox->FlatAppearance->MouseOverBackColor = System::Drawing::Color::LightGray;
+			checkBox->FlatAppearance->MouseOverBackColor = System::Drawing::Color::DimGray;
 			checkBox->CheckState = CheckState::Unchecked;
 		}
 
@@ -248,7 +248,7 @@ namespace view{
 		CheckBox^ checkBox = static_cast<CheckBox^>(sender);
 
 		if (this->currentNeighbors->Count != 0 && !this->currentNeighbors->Contains(checkBox) && checkBox != this->lastBoxChecked){
-			checkBox->FlatAppearance->MouseOverBackColor = System::Drawing::Color::LightGray;
+			checkBox->FlatAppearance->MouseOverBackColor = System::Drawing::Color::DimGray;
 		}
 		else
 		{
