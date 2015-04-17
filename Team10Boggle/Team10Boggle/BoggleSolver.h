@@ -13,12 +13,13 @@ using namespace System::Windows::Forms;
 using namespace System::Text;
 using namespace System::ComponentModel;
 
+/// <summary>
+/// Solves a specified Boggle board using
+/// depth first search.
+/// </summary>
 namespace model
 {
-	/// <summary>
-	/// Solves a specified Boggle board using
-	/// depth first search.
-	/// </summary>
+
 	ref class BoggleSolver
 	{
 	public:
@@ -38,7 +39,6 @@ namespace model
 		void generateAllWords();
 		void setValidWords(Trie^ lexicon);
 		array<Vertex^, 2>^ getBoard(array<String^, 2>^ board);
-		//array<Vertex^, 2>^ addNeighbors(array<Vertex^, 2>^ board);
 	};
 
 }
