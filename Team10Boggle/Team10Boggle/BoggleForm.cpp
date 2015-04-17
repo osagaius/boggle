@@ -156,6 +156,7 @@ namespace view{
 		this->mainMenuPanel->Visible = false;
 		this->highScorePanel->Visible = true;
 		this->highScorePanel->BringToFront();
+		this->scoreBoard->Items->Clear();
 
 		for (int i = 0; i < 10 && i < this->boggle->Players->Players->Count; i++){
 			ListViewItem^ item = gcnew ListViewItem(gcnew array < String^ > {this->boggle->Players->Players[i]->Name, this->boggle->Players->Players[i]->Score.ToString()});
