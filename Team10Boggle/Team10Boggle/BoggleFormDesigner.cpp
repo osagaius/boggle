@@ -113,7 +113,7 @@ namespace view{
 		// 
 		// timer1
 		// 
-		this->timer1->Interval = 1;
+		this->timer1->Interval = 1000;
 		this->timer1->Tick += gcnew System::EventHandler(this, &BoggleForm::timer1_Tick);
 		// 
 		// label3

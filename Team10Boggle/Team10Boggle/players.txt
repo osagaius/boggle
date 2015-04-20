@@ -1,9 +1,17 @@
+Mac,30
 Osa,26
+jkn,25
+Mac,21
+Mac,21
 Mac,21
 Gerald,20
 Osa,19
+Mac,18
 Kim,18
+mkjnkl,17
+hkjh,16
 Osa,16
+Mac,16
 Osa,15
 Osa,14
 Mac,13
